@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect, CSRFError
-from forms.forms import registration, loginForm
+from forms.forms import registration, loginForm, addModel
 import sqlite3
 
 app = Flask(__name__)
@@ -23,43 +23,106 @@ mysql.init_app(app)
 app.config.from_object(Config)
 csrf = CSRFProtect(app)
 
+@app.before_request
+def before_request():
+        g.username = None
+        if 'username' in session:
+                g.username = session['username']
+        if 'search' in session:
+                g.search = session['search']
+
 @app.route("/")
+@app.route("/Home")
+@app.route("/home")
 def home():
-        return render_template('index.html')
+        if g.username:
+                username=g.username
+                return redirect(url_for('adminDash', username=username))
+        else:
+                return render_template('index.html')
 
 @app.route('/register/', methods=["GET","POST"])
 def register():
-        form = registration(request.form)
-        if request.method == 'POST':
-                pw_hash =bcrypt.generate_password_hash(form.password.data)
-                newEntry = [((form.username.data), pw_hash, (form.emailAddress.data))]
-                conn =sqlite3.connect('static/user_db.db')
-                print ("Opened database successfully")
-                completion = False
-                with conn:
-                        c =conn.cursor()
-                        try:
-                                sql = '''INSERT INTO users (username, password, email) VALUES(?,?,?)'''
-                                conn.executemany(sql, newEntry)
-                                print ("TAble created successfully")
-                        except:
-                                error ="This is already an account, please log in with those details or change details."
-                                return render_template("register.html", error=error)
-                                conn.commit()
+        if g.username:
+                username=g.username
+                return render_template('adminDash.html', username=username)
+        else:
+                form = registration(request.form)
+                if request.method == 'POST':
+                        pw_hash =bcrypt.generate_password_hash(form.password.data)
+                        newEntry = [((form.username.data), pw_hash, (form.emailAddress.data))]
+                        conn =sqlite3.connect('static/user_db.db')
+                        print ("Opened database successfully")
+                        with conn:
+                                c =conn.cursor()
+                                try:
+                                        sql = '''INSERT INTO user (username, password, email) VALUES(?,?,?)'''
+                                        conn.executemany(sql, newEntry)
+                                        print ("Insert correctly")
+                                except:
+                                        flash("This is already an account, please log in with those details or change details.")
+                                        return render_template("register.html", form=form)
+                                        conn.commit()
 
-                        flash((form.username.data) + " Successfully Registered!")
-                        return render_template("login.html", form=form)
+                                flash((form.username.data) + " Successfully Registered!")
+                                return redirect('login')
+                        return render_template("register.html", form=form)
                 return render_template("register.html", form=form)
-        return render_template("register.html", form=form)
 
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
-        form = loginForm(request.form)
-        if request.method == 'POST':                
+        form = loginForm(request.form)       
+        if request.method == 'POST':  
+                conn = sqlite3.connect('static/user_db.db')
+                
+                with conn:
+                        c = conn.cursor()
+                        find_user = ("SELECT * FROM user WHERE username = ?")
+                        c.execute(find_user, [(form.username.data)])  
+                        results =c.fetchall()
+                        
+                        userResults = results[0]
+                        print(userResults)
+                        print(form.password.data)
+                        if bcrypt.check_password_hash(userResults[1],(form.password.data)):
+                                session['logged_in'] = True
+                                session['username'] = (form.username.data)
+                                return redirect(url_for('adminDash'))
+                        else:
+                                flash('Either username or password was not recognised')
+                                return render_template('login.html', form=form) 
+
+                                 
                 return render_template("login.html", form=form)
         
         return render_template("login.html", form=form)
+
+@app.route("/logout")
+def logout():        
+        session['logged_in'] = True
+        session.clear()
+        flash("You have successfully logged out.")
+        return render_template("index.html")
+
+
+@app.route('/adminDash/')
+def adminDash():
+        if g.username:
+                username=g.username
+                return render_template('adminDash.html', username=username)
+        else:
+                flash('Please Login to continue')
+                return redirect('login')
+
+@app.route('/addEntry/')
+def addEntry():
+        form = addModel(request.form)
+        return render_template('addEntry.html', form=form)
+
+@app.route('/deleteEntry/')
+def deleteEntry():
+        return render_template('deleteEntry.html')
 
 if __name__ == "__main__":
       app.run('localhost', 5000, debug=True)

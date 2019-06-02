@@ -1,6 +1,16 @@
 {% extends "template.html" %}
-
 {% block content %}
+
+      {% for message in get_flashed_messages() %}
+      <div class="alert alert-warning">
+          <button type="button" class="close" data-dismiss="alert">
+            &times;
+          </button>
+          {{ message }}
+      </div>
+    {% endfor %}
+
+
   <h1>Sign up</h1>
   <p class="important">
       <div class="container">

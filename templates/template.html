@@ -3,16 +3,29 @@
   <head>
     <title>Aitkens</title>      
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">    
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
    
   </head>
   <body>
+    
+<nav class="navbar navbar-inverse">
+    <div class="container">
+    <div class="navbar-header">
+    <a class="navbar-brand" href={{ url_for ('home')}}>Admin View</a>
+    </div>
+    
+    <ul class="nav navbar-nav">
+      <li class="active"><a href={{ url_for ('home') }}>Home</a></li>
+      <li><a href={{ url_for ('login') }}>Login</a></li>
+      <li><a href={{ url_for ('register')}}>Register</a></li>
+      <li><a href={{ url_for ('logout')}}>Logout</a></li>
+    </ul>
+  </nav>
     <div id="content">{% block content %}{% endblock %}</div>
     <div id="footer">
       {% block footer %}
-      &copy; Copyright 2019 by <a href="http://www.thedesigndepartment.com/">The Design Department</a>.
+      &copy; Copyright 2019 by <a href="http://www.jamfish.co.uk/">Jamfish</a>.
       {% endblock %}
     </div>
   </body>

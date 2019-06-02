@@ -1,0 +1,10 @@
+{% extends "template.html" %}
+
+{% block content %}
+  <h1>Admin Dashboard</h1>
+  <p class="important">
+    Welcome {{username }}
+
+    <a href={{url_for('addEntry')}}>Add Entry</a>
+    <a href={{url_for('deleteEntry')}}>Delete Entry</a>
+{% endblock %}
