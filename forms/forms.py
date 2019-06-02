@@ -11,10 +11,14 @@ from datetime import datetime, date, timedelta
 from flask import session
 from wtforms.validators import NumberRange
 
-
+class loginForm(FlaskForm):
+    username = StringField('username', validators=[DataRequired(), Length(min=2, max=30)])
+    password = PasswordField('password', validators=[DataRequired(), Length(min=2, max=30)])
+    submit = SubmitField('login')
 
 class registration(FlaskForm):
     username = StringField('username', validators=[DataRequired(), Length(min=2, max=30)])
-    password = StringField('password', validators=[DataRequired(), Length(min=2, max=30)])
+    password = PasswordField('password', validators=[DataRequired(), Length(min=2, max=30)])
     emailAddress = StringField('Email Address', validators=[DataRequired(), Email()])
     submit = SubmitField('Register')
+
