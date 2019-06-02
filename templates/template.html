@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Aitkens</title>      
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+   
+  </head>
+  <body>
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+      {% block footer %}
+      &copy; Copyright 2019 by <a href="http://www.thedesigndepartment.com/">The Design Department</a>.
+      {% endblock %}
+    </div>
+  </body>
+</html>

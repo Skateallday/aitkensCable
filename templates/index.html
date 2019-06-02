@@ -1,0 +1,10 @@
+{% extends "template.html" %}
+
+{% block content %}
+  <h1>Index</h1>
+  <p class="important">
+    Welcome on my awesome homepage.
+
+    <a href={{url_for('login')}}>Log in</a>
+    <a href={{url_for('register')}}>Sign up</a>
+{% endblock %}
