@@ -8,8 +8,9 @@ from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect, CSRFError
-from forms.forms import registration, loginForm, addModel
+from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm
 import sqlite3
+from itsdangerous import URLSafeTimedSerializer
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -83,8 +84,6 @@ def login():
                         results =c.fetchall()
                         
                         userResults = results[0]
-                        print(userResults)
-                        print(form.password.data)
                         if bcrypt.check_password_hash(userResults[1],(form.password.data)):
                                 session['logged_in'] = True
                                 session['username'] = (form.username.data)
@@ -119,6 +118,77 @@ def adminDash():
 def addEntry():
         form = addModel(request.form)
         return render_template('addEntry.html', form=form)
+
+
+
+
+@app.route('/reset/', methods=['GET', 'POST'])
+def forgotpassword():
+        form = forgotPassword(request.form)
+        if form.validate_on_submit():
+                conn = sqlite3.connect('static/user_db.db')
+                
+                with conn:
+                        c = conn.cursor()
+                        find_user = ("SELECT * FROM user WHERE email = ?")
+                        c.execute(find_user, [(form.email.data)])  
+                        user =c.fetchall()
+                        fuser = user[0]
+                        find_email = ("SELECT  email FROM user")
+                        c.execute(find_email)
+                        email =c.fetchall()
+                        Femail = email[0]
+                        print(fuser[2])
+                        print(Femail[0])
+
+                
+                if fuser[2] == Femail[0]:
+                        send_password_reset_email(Femail[0])
+                        flash('Please check your email for a password reset link.', 'success')
+                else:
+                        flash('Your email address must be confirmed before attempting a password reset.', 'error')
+        return render_template('forgotPassword.html', form=form)
+
+def send_password_reset_email(user_email):
+    password_reset_serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+ 
+    password_reset_url = url_for(
+        'reset_with_token',
+        token = password_reset_serializer.dumps(user_email, salt='password-reset-salt'),
+        _external=True)
+ 
+    html = render_template(
+        'email_password_reset.html',
+        password_reset_url=password_reset_url)
+ 
+    send_email('Password Reset Requested', [user_email], html)
+
+
+@app.route('/reset/<token>', methods=["GET", "POST"])
+def reset_with_token(token):
+    try:
+        password_reset_serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+        email = password_reset_serializer.loads(token, salt='password-reset-salt', max_age=3600)
+    except:
+        flash('The password reset link is invalid or has expired.', 'error')
+        return redirect(url_for('users.login'))
+ 
+    form = PasswordForm()
+ 
+    if form.validate_on_submit():
+        try:
+            user = User.query.filter_by(email=email).first_or_404()
+        except:
+            flash('Invalid email address!', 'error')
+            return redirect(url_for('users.login'))
+ 
+        user.password = form.password.data
+        db.session.add(user)
+        db.session.commit()
+        flash('Your password has been updated!', 'success')
+        return redirect(url_for('users.login'))
+ 
+    return render_template('reset_password_with_token.html', form=form, token=token)
 
 @app.route('/deleteEntry/')
 def deleteEntry():

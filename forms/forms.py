@@ -22,6 +22,13 @@ class registration(FlaskForm):
     emailAddress = StringField('Email Address', validators=[DataRequired(), Email()])
     submit = SubmitField('Register')
 
+class forgotPassword(FlaskForm):
+        email= StringField('Email Address', validators=[DataRequired(), Email()])
+        submit = SubmitField('Send Email')
+
+class PasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+
 class addModel(FlaskForm):
     itemName = StringField('itemName', validators=[DataRequired(), Length(min=2, max=30)])
     modelRef = StringField('modelRef', validators=[DataRequired(), Length(min=2, max=30)])
