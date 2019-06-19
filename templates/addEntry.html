@@ -12,9 +12,86 @@
   <h1>Add Entry</h1>
   <p class="important">
     <div class="container">
-        {{ form }}
 <form method="POST" action='' enctype="multipart/form-data">
+    {{ form.hidden_tag() }} {{ form.csrf_token() }}
+
+
+            
+    <label for="itemName">Item Name</label>
+    {% if request.method == 'POST' %}
+    {% for error in form.itemName.errors %}
+    <span class="errors">[{{ error }}]</span>
+    {% endfor %}
+    {% endif %}
+    {{ form.itemName(class="form-control") }}
+
+    <label for="modelRef">Model Ref</label>
+    {% if request.method == 'POST' %}
+    {% for error in form.modelRef.errors %}
+    <span class="errors">[{{ error }}]</span>
+    {% endfor %}
+    {% endif %}
+    {{ form.modelRef(class="form-control") }}
+
+    <label for="itemCategory">Item Category</label>
+    {% if request.method == 'POST' %}
+    {% for error in form.itemCategory.errors %}
+    <span class="errors">[{{ error }}]</span>
+    {% endfor %}
+    {% endif %}
+    {{ form.itemCategory(class="form-control") }}    
+
+    <label for="measurements">Item Measurements</label>
+    {% if request.method == 'POST' %}
+    {% for error in form.measurements.errors %}
+    <span class="errors">[{{ error }}]</span>
+    {% endfor %}
+    {% endif %}
+    {{ form.measurements(class="form-control") }}   
+
+    <label for="value">Value</label>
+    {% if request.method == 'POST' %}
+    {% for error in form.value.errors %}
+    <span class="errors">[{{ error }}]</span>
+    {% endfor %}
+    {% endif %}
+    {{ form.value(class="form-control") }} 
+
+    <label for="measurements2">Item Measurements</label>
+    {% if request.method == 'POST' %}
+    {% for error in form.measurements2.errors %}
+    <span class="errors">[{{ error }}]</span>
+    {% endfor %}
+    {% endif %}
+    {{ form.measurements2(class="form-control") }}  
     
+    <label for="value2">Value</label>
+    {% if request.method == 'POST' %}
+    {% for error in form.value2.errors %}
+    <span class="errors">[{{ error }}]</span>
+    {% endfor %}
+    {% endif %}
+    {{ form.value2(class="form-control") }} 
+
+
+    <label for="measurements3">Item Measurements</label>
+    {% if request.method == 'POST' %}
+    {% for error in form.measurements3.errors %}
+    <span class="errors">[{{ error }}]</span>
+    {% endfor %}
+    {% endif %}
+    {{ form.measurements3(class="form-control") }}
+    
+    <label for="value3">Value</label>
+    {% if request.method == 'POST' %}
+    {% for error in form.value3.errors %}
+    <span class="errors">[{{ error }}]</span>
+    {% endfor %}
+    {% endif %}
+    {{ form.value3(class="form-control") }} 
+   
+
+    {{ form.submit(class="btn btn-danger") }}
 
 </form>
     </div>
