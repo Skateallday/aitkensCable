@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect, CSRFError
-from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm, chooseForm
+from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm, viewItems
 import sqlite3
 from itsdangerous import URLSafeTimedSerializer
 
@@ -109,25 +109,47 @@ def logout():
 @app.route('/adminDash/', methods=['GET', 'POST'])
 def adminDash():
         if g.username:
-                form = chooseForm(request.form)
-                username=g.username
-                if request.method =='POST':
-                        table= (form.itemCategory.data)
-                        render_template('addEntry.html', table=table)
-                return render_template('adminDash.html', form=form, username=username)
+                
+                return render_template('adminDash.html')
         else:
                 flash('Please Login to continue')
                 return redirect('login')
 
-@app.route('/addEntry/', methods=['GET', 'POST'])
-@app.route('/adminDash/addEntry/<string:table>', methods=['GET', 'POST'])
-def addEntry(table):
-        if g.username:
-                form = table + "(request.form)"
-                print(form)
 
+@app.route('/viewItem/', methods=['GET', 'POST'])
+def viewItem():
+        if g.username:
+                error=""
+                form= viewItems(request.form)
                 if request.method == 'POST':
-                        """
+                        table = form.itemCategory.data
+                        print(table)
+                        conn = sqlite3.connect('static/data.sqlite')
+                        with conn:
+                                c = conn.cursor()
+                                try:                                                          
+                                        c.execute('''SELECT * FROM ''' + table)
+                                        rows = c.fetchall
+                                        for row in rows:
+                                                print(row)
+                                                return redirect(url_for('viewItem'))
+                                except:
+                                        error="Error no results"
+                                        return render_template('viewItems.html', error=error, form=form)
+                else:
+                        return render_template('viewItems.html', error=error, form=form)
+        else:
+                flash('Please Login to continue')
+                return redirect('login')
+
+
+@app.route('/addEntry/', methods=['GET', 'POST'])
+def addEntry():
+        if g.username:
+                form = addModel(request.form)
+
+                if request.method == 'POST':   
+                        table=(form.itemCategory.data)                     
                         item_name =(form.itemName.data)
                         print(item_name)
                         item_Ref =(form.modelRef.data)
@@ -136,7 +158,7 @@ def addEntry(table):
                         value1=(form.value.data)
                         measurement2=(form.measurements2.data)
                         value2=(form.value2.data)
-                        #measurement3=(form.measurements3)
+                        measurement3=(form.measurements3)
                         value3=(form.value3.data)
                         entry=[((form.itemName.data),(form.value3.data), (form.modelRef.data))]
                         print(entry)                             
@@ -151,10 +173,12 @@ def addEntry(table):
                                         message = "You have added " + str(c.fetchall) + " to the database."
                                         print(message)
                                         return redirect(url_for('adminDash'))
-                                except Exception as e: print(e)"""
+                                except Exception as e: print(e)
                         return render_template('addEntry.html', form=form)                                        
                 else:
                         return render_template('addEntry.html', form=form)
+        return render_template('addEntry.html', form=form)
+
 
 
 

@@ -4,21 +4,10 @@
   <h1>Admin Dashboard</h1>
   <p class="important">
     Welcome {{username }}
-    <form method="POST" action='addEntry/{{form.itemCategory.data}}' enctype="multipart/form-data">
-      {{ form.hidden_tag() }} {{ form.csrf_token() }}
-      
-            
-    <label for="itemCategory">Item Category</label>
-    {% if request.method == 'POST' %}
-    {% for error in form.itemCategory.errors %}
-    <span class="errors">[{{ error }}]</span>
-    {% endfor %}
-    {% endif %}
-    {{ form.itemCategory(class="form-control") }}
-    {{ form.submit(class="btn btn-danger") }}
-</form>
-
+    
 
     <a href={{url_for('addEntry')}}>Add Entry</a>
     <a href={{url_for('deleteEntry')}}>Delete Entry</a>
+    <a href={{url_for('viewItem')}}>View</a>
+
 {% endblock %}
