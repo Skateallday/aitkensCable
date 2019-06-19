@@ -29,14 +29,18 @@ class forgotPassword(FlaskForm):
 class PasswordForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
 
-class addModel(FlaskForm):
-    itemName = StringField('itemName', validators=[DataRequired(), Length(min=2, max=30)])
-    modelRef = StringField('modelRef', validators=[DataRequired(), Length(min=2, max=30)])
+class chooseForm(FlaskForm):
     itemCategory = SelectField('itemCategory',   choices=[('cable_basket', 'Cable Basket'), ('cable_Ladder', 'Cable Ladder'),
                                                          ('cable_tray', 'Cable Tray'), ('cable_trunking', 'Cable Trunking'),
                                                          ('channel_support', 'Channel Support'), ('dado_trunking', 'Dado Trunking'),
                                                          ('Floor_Service_Box', 'Floor Service Box'), ('lighting_trunking', 'Lighting Trunking'),
                                                          ('plastic_conduit', 'Plastic Conduit'), ('roof_support_systems', 'Roof Support Systems')], validators=[DataRequired()])
+    submit = SubmitField('Choose form')
+    
+
+class addModel(FlaskForm):
+    itemName = StringField('itemName', validators=[DataRequired(), Length(min=2, max=30)])
+    modelRef = StringField('modelRef', validators=[DataRequired(), Length(min=2, max=30)])
     measurements = SelectField('Measurements', choices=[('width', 'Width'), ('height', 'Height'), ('length', 'Length'),
                                                         ('diameter.', 'Diameter'), ('finish', 'Finish'),
                                                         ('material', 'Material'), ('size', 'Size'),

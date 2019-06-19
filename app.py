@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect, CSRFError
-from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm
+from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm, chooseForm
 import sqlite3
 from itsdangerous import URLSafeTimedSerializer
 
@@ -23,6 +23,7 @@ mysql = MySQL()
 mysql.init_app(app)
 app.config.from_object(Config)
 csrf = CSRFProtect(app)
+table =""
 
 @app.before_request
 def before_request():
@@ -105,19 +106,55 @@ def logout():
         return render_template("index.html")
 
 
-@app.route('/adminDash/')
+@app.route('/adminDash/', methods=['GET', 'POST'])
 def adminDash():
         if g.username:
+                form = chooseForm(request.form)
                 username=g.username
-                return render_template('adminDash.html', username=username)
+                if request.method =='POST':
+                        table= (form.itemCategory.data)
+                        render_template('addEntry.html', table=table)
+                return render_template('adminDash.html', form=form, username=username)
         else:
                 flash('Please Login to continue')
                 return redirect('login')
 
-@app.route('/addEntry/')
-def addEntry():
-        form = addModel(request.form)
-        return render_template('addEntry.html', form=form)
+@app.route('/addEntry/', methods=['GET', 'POST'])
+@app.route('/adminDash/addEntry/<string:table>', methods=['GET', 'POST'])
+def addEntry(table):
+        if g.username:
+                form = table + "(request.form)"
+                print(form)
+
+                if request.method == 'POST':
+                        """
+                        item_name =(form.itemName.data)
+                        print(item_name)
+                        item_Ref =(form.modelRef.data)
+                        print(item_Ref)
+                        measurement1=(form.measurements.data)
+                        value1=(form.value.data)
+                        measurement2=(form.measurements2.data)
+                        value2=(form.value2.data)
+                        #measurement3=(form.measurements3)
+                        value3=(form.value3.data)
+                        entry=[((form.itemName.data),(form.value3.data), (form.modelRef.data))]
+                        print(entry)                             
+                        print(table)
+
+                        conn = sqlite3.connect('static/data.sqlite')                
+                        with conn:
+                                c = conn.cursor()
+                                try:
+                                        insert_into = '''INSERT INTO ''' + str(table) + ''' (model_name, width, model_ref ) VALUES (?,?,?)'''                      
+                                        conn.executemany(insert_into, entry)
+                                        message = "You have added " + str(c.fetchall) + " to the database."
+                                        print(message)
+                                        return redirect(url_for('adminDash'))
+                                except Exception as e: print(e)"""
+                        return render_template('addEntry.html', form=form)                                        
+                else:
+                        return render_template('addEntry.html', form=form)
 
 
 
