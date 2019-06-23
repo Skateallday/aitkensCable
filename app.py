@@ -125,18 +125,18 @@ def viewItem():
                         table = form.itemCategory.data
                         print(table)
                         conn = sqlite3.connect('static/data.sqlite')
-                        with conn:
-                                c = conn.cursor()
-                                try:                                                          
-                                        c.execute('''SELECT * FROM ''' + table)
-                                        rows = c.fetchall
-                                        for row in rows:
-                                                print(row)
-                                                return redirect(url_for('viewItem'))
-                                except:
-                                        error="Error no results"
-                                        return render_template('viewItems.html', error=error, form=form)
+                        
+                        c = conn.cursor()
+                                                                                        
+                        search=('''SELECT * FROM items WHERE item_category LIKE (?)''')
+                        c.execute(search, [table])
+                        rows = c.fetchall()
+                        for row in rows:
+                                results = row
+                                return render_template('viewItems.html', results=results, form=form)
+
                 else:
+                        error="Error no results"
                         return render_template('viewItems.html', error=error, form=form)
         else:
                 flash('Please Login to continue')
@@ -154,13 +154,15 @@ def addEntry():
                         print(item_name)
                         item_Ref =(form.modelRef.data)
                         print(item_Ref)
+                        model_number =(form.modelNumber.data)
+                        item_category =(form.itemCategory.data)
                         measurement1=(form.measurements.data)
                         value1=(form.value.data)
                         measurement2=(form.measurements2.data)
                         value2=(form.value2.data)
-                        measurement3=(form.measurements3)
+                        measurement3=(form.measurements3.data)
                         value3=(form.value3.data)
-                        entry=[((form.itemName.data),(form.value3.data), (form.modelRef.data))]
+                        entry=[(item_name, item_Ref, model_number, item_category, measurement1, value1, measurement2, value2, measurement3, value3)]
                         print(entry)                             
                         print(table)
 
@@ -168,7 +170,7 @@ def addEntry():
                         with conn:
                                 c = conn.cursor()
                                 try:
-                                        insert_into = '''INSERT INTO ''' + str(table) + ''' (model_name, width, model_ref ) VALUES (?,?,?)'''                      
+                                        insert_into = '''INSERT INTO items (item_name, model_ref, model_number, item_category,  measurement1, value1, measurement2, value2, measurement3, value3 ) VALUES (?,?,?,?,?,?,?,?,?,?)'''                      
                                         conn.executemany(insert_into, entry)
                                         message = "You have added " + str(c.fetchall) + " to the database."
                                         print(message)

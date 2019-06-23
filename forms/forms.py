@@ -41,6 +41,8 @@ class viewItems(FlaskForm):
 class addModel(FlaskForm):
     itemName = StringField('itemName', validators=[DataRequired(), Length(min=2, max=30)])
     modelRef = StringField('modelRef', validators=[DataRequired(), Length(min=2, max=30)])
+    modelNumber = StringField('modelNumber', validators=[DataRequired(), Length(min=2, max=30)])
+
     itemCategory = SelectField('itemCategory',   choices=[('cable_basket', 'Cable Basket'), ('cable_Ladder', 'Cable Ladder'),
                                                          ('cable_tray', 'Cable Tray'), ('cable_trunking', 'Cable Trunking'),
                                                          ('channel_support', 'Channel Support'), ('dado_trunking', 'Dado Trunking'),

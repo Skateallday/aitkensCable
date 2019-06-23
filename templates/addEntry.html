@@ -33,6 +33,14 @@
     {% endif %}
     {{ form.modelRef(class="form-control") }}
 
+    <label for="modelNumber">Model Number</label>
+    {% if request.method == 'POST' %}
+    {% for error in form.modelNumber.errors %}
+    <span class="errors">[{{ error }}]</span>
+    {% endfor %}
+    {% endif %}
+    {{ form.modelNumber(class="form-control") }}
+
     <label for="itemCategory">Item Category</label>
     {% if request.method == 'POST' %}
     {% for error in form.itemCategory.errors %}
