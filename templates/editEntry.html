@@ -1,6 +1,8 @@
 {% extends "template.html" %}
 
 {% block content %}
+
+{{ error }}
 {% for message in get_flashed_messages() %}
       <div class="alert alert-warning">
           <button type="button" class="close" data-dismiss="alert">
@@ -9,7 +11,7 @@
           {{ message }}
       </div>
     {% endfor %}
-  <h1>Add Entry</h1>
+  <h1>Edit Entry</h1>
   <p class="important">
     <div class="container">
 <form method="POST" action='' enctype="multipart/form-data">
@@ -23,7 +25,7 @@
     <span class="errors">[{{ error }}]</span>
     {% endfor %}
     {% endif %}
-    {{ form.itemName(class="form-control") }}
+    {{ form.itemName(class="form-control", value=data[0]) }}
 
     <label for="modelRef">Model Ref</label>
     {% if request.method == 'POST' %}
@@ -31,7 +33,7 @@
     <span class="errors">[{{ error }}]</span>
     {% endfor %}
     {% endif %}
-    {{ form.modelRef(class="form-control") }}
+    {{ form.modelRef(class="form-control", value=data[1]) }}
 
     <label for="modelNumber">Model Number</label>
     {% if request.method == 'POST' %}
@@ -39,7 +41,7 @@
     <span class="errors">[{{ error }}]</span>
     {% endfor %}
     {% endif %}
-    {{ form.modelNumber(class="form-control") }}
+    {{ form.modelNumber(class="form-control", value=data[2]) }}
 
     <label for="itemCategory">Item Category</label>
     {% if request.method == 'POST' %}
@@ -47,7 +49,7 @@
     <span class="errors">[{{ error }}]</span>
     {% endfor %}
     {% endif %}
-    {{ form.itemCategory(class="form-control") }}    
+    {{ form.itemCategory(class="form-control", select=data[11]) }}    
 
     <label for="measurements">Item Measurements</label>
     {% if request.method == 'POST' %}
@@ -55,7 +57,7 @@
     <span class="errors">[{{ error }}]</span>
     {% endfor %}
     {% endif %}
-    {{ form.measurements(class="form-control") }}   
+    {{ form.measurements(class="form-control", select=data[3]) }}   
 
     <label for="value">Value</label>
     {% if request.method == 'POST' %}
@@ -63,7 +65,7 @@
     <span class="errors">[{{ error }}]</span>
     {% endfor %}
     {% endif %}
-    {{ form.value(class="form-control") }} 
+    {{ form.value(class="form-control", value=data[4]) }} 
 
     <label for="measurements2">Item Measurements</label>
     {% if request.method == 'POST' %}
@@ -71,7 +73,7 @@
     <span class="errors">[{{ error }}]</span>
     {% endfor %}
     {% endif %}
-    {{ form.measurements2(class="form-control") }}  
+    {{ form.measurements2(class="form-control", select=data[5]) }}  
     
     <label for="value2">Value</label>
     {% if request.method == 'POST' %}
@@ -79,7 +81,7 @@
     <span class="errors">[{{ error }}]</span>
     {% endfor %}
     {% endif %}
-    {{ form.value2(class="form-control") }} 
+    {{ form.value2(class="form-control", value=data[6]) }} 
 
 
     <label for="measurements3">Item Measurements</label>
@@ -88,7 +90,7 @@
     <span class="errors">[{{ error }}]</span>
     {% endfor %}
     {% endif %}
-    {{ form.measurements3(class="form-control") }}
+    {{ form.measurements3(class="form-control", select=data[7]) }}
     
     <label for="value3">Value</label>
     {% if request.method == 'POST' %}
@@ -96,7 +98,7 @@
     <span class="errors">[{{ error }}]</span>
     {% endfor %}
     {% endif %}
-    {{ form.value3(class="form-control") }} 
+    {{ form.value3(class="form-control", value=data[8]) }} 
 
     <label for="measurements4">Item Measurements</label>
     {% if request.method == 'POST' %}
@@ -104,7 +106,7 @@
     <span class="errors">[{{ error }}]</span>
     {% endfor %}
     {% endif %}
-    {{ form.measurements4(class="form-control") }}
+    {{ form.measurements4(class="form-control", select=data[9]) }}
     
     <label for="value4">Value</label>
     {% if request.method == 'POST' %}
@@ -112,7 +114,7 @@
     <span class="errors">[{{ error }}]</span>
     {% endfor %}
     {% endif %}
-    {{ form.value4(class="form-control") }} 
+    {{ form.value4(class="form-control", value=data[10]) }} 
    
 
     {{ form.submit(class="btn btn-danger") }}

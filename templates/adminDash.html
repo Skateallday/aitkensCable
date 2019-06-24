@@ -1,13 +1,18 @@
 {% extends "template.html" %}
 
 {% block content %}
+
+{% for message in get_flashed_messages() %}
+{{ message }}
+{% endfor %}
+
   <h1>Admin Dashboard</h1>
   <p class="important">
-    Welcome {{username }}
-    
+    Welcome {{ username }}
+    </p>
 
-    <a href={{url_for('addEntry')}}>Add Entry</a>
-    <a href={{url_for('deleteEntry')}}>Delete Entry</a>
-    <a href={{url_for('viewItem')}}>View</a>
+    <a class="btn btn-primary" href={{url_for('addEntry')}}>Add Entry</a>
+    <a class="btn btn-danger" href={{url_for('deleteEntry')}}>Delete Entry</a>
+    <a class="btn btn-warning" href={{url_for('viewItem')}}>View Entries</a>
 
 {% endblock %}

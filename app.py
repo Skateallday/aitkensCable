@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect, CSRFError
-from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm, viewItems
+from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm, viewItems, editModel
 import sqlite3
 from itsdangerous import URLSafeTimedSerializer
 
@@ -38,8 +38,7 @@ def before_request():
 @app.route("/home")
 def home():
         if g.username:
-                username=g.username
-                return redirect(url_for('adminDash', username=username))
+                return render_template('adminDash.html', username=g.username)
         else:
                 return render_template('index.html')
 
@@ -59,12 +58,12 @@ def register():
                                 c =conn.cursor()
                                 try:
                                         sql = '''INSERT INTO user (username, password, email) VALUES(?,?,?)'''
-                                        conn.executemany(sql, newEntry)
+                                        c.executemany(sql, newEntry)
                                         print ("Insert correctly")
                                 except:
                                         flash("This is already an account, please log in with those details or change details.")
                                         return render_template("register.html", form=form)
-                                        conn.commit()
+                                        c.commit()
 
                                 flash((form.username.data) + " Successfully Registered!")
                                 return redirect('login')
@@ -115,6 +114,31 @@ def adminDash():
                 flash('Please Login to continue')
                 return redirect('login')
 
+@app.route('/editEntry/<data>', methods=['GET', 'POST'])
+def editEntry(data):
+        if g.username:
+                form= editModel(request.form)
+                conn = sqlite3.connect('static/data.sqlite')
+                        
+                c = conn.cursor()
+                print(data)     
+                print([data])                                   
+                c.execute('SELECT * FROM items WHERE model_number LIKE (?)', (data,))
+                results = c.fetchall()
+                if results:
+                        for result in results:
+                                print(results)
+                                print(result)
+                                error="Change the form as you please"
+                                return render_template('editEntry.html', error=error, data=result, form=form)
+                else:
+                        error="Something has gone wrong"
+                        return render_template('editEntry.html', form=form, error=error)
+        
+        else:
+                flash('Please Login to continue')
+                return redirect('login')
+        
 
 @app.route('/viewItem/', methods=['GET', 'POST'])
 def viewItem():
@@ -131,12 +155,19 @@ def viewItem():
                         search=('''SELECT * FROM items WHERE item_category LIKE (?)''')
                         c.execute(search, [table])
                         rows = c.fetchall()
-                        for row in rows:
-                                results = row
-                                return render_template('viewItems.html', results=results, form=form)
+                        if rows:
+
+                                for row in rows:
+                                        print(row)
+                                        print(rows)
+                                        results = rows
+                                        return render_template('viewItems.html', results=results, form=form)
+                        else:
+                                error="Sorry there are no results"
+                                return render_template('viewItems.html', error=error, form=form)
 
                 else:
-                        error="Error no results"
+                        error=""
                         return render_template('viewItems.html', error=error, form=form)
         else:
                 flash('Please Login to continue')
@@ -162,7 +193,9 @@ def addEntry():
                         value2=(form.value2.data)
                         measurement3=(form.measurements3.data)
                         value3=(form.value3.data)
-                        entry=[(item_name, item_Ref, model_number, item_category, measurement1, value1, measurement2, value2, measurement3, value3)]
+                        measurement4=(form.measurements4.data)
+                        value4=(form.value4.data)
+                        entry=[(item_name, item_Ref, model_number, item_category, measurement1, value1, measurement2, value2, measurement3, value3, measurement4, value4)]
                         print(entry)                             
                         print(table)
 
@@ -170,10 +203,10 @@ def addEntry():
                         with conn:
                                 c = conn.cursor()
                                 try:
-                                        insert_into = '''INSERT INTO items (item_name, model_ref, model_number, item_category,  measurement1, value1, measurement2, value2, measurement3, value3 ) VALUES (?,?,?,?,?,?,?,?,?,?)'''                      
+                                        insert_into = '''INSERT INTO items (item_name, model_number, model_ref, item_category,  measurement1, value1, measurement2, value2, measurement3, value3, measurement4, value4 ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)'''                      
                                         conn.executemany(insert_into, entry)
-                                        message = "You have added " + str(c.fetchall) + " to the database."
-                                        print(message)
+                                        message = "You have added " + item_name + " to the database."
+                                        flash(message)
                                         return redirect(url_for('adminDash'))
                                 except Exception as e: print(e)
                         return render_template('addEntry.html', form=form)                                        

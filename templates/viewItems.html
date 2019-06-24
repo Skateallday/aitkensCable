@@ -38,13 +38,29 @@
           <th scope="col">Fourth Measurement</th>
           <th scope="col">Fourth Value</th>
           <th scope="col">Item Category</th>
-        </tr>
+        </tr>{% for row in results %}
         <tr>
-{% for row in results %}<td>{{row}}</td>{% endfor %}
-        </tr>
+<td>{{ row[0] }}</td>
+<td>{{ row[1] }}</td>
+<td>{{ row[2] }}</td>
+<td>{{ row[3] }}</td>
+<td>{{ row[4] }}</td>
+<td>{{ row[5] }}</td>
+<td>{{ row[6] }}</td>
+<td>{{ row[7] }}</td>
+<td>{{ row[8] }}</td>
+<td>{{ row[9] }}</td>
+<td>{{ row[10] }}</td>
+<td>{{ row[11] }}</td>
+<td>{{ row[12] }}</td>
 
-					
-            
+
+
+<td><a href={{url_for('editEntry', data=row[1])}} class="btn btn-warning">Edit entry</button></td>
+<td><button class="btn btn-danger">Delete Entry</button></td>
+        </tr>{% endfor %}
+
+					   
           
                 
                               
