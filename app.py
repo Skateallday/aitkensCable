@@ -10,6 +10,7 @@ from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect, CSRFError
 from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm, viewItems, editModel
 import sqlite3
+import ctypes 
 from itsdangerous import URLSafeTimedSerializer
 
 app = Flask(__name__)
@@ -122,15 +123,50 @@ def editEntry(data):
                         
                 c = conn.cursor()
                 print(data)     
-                print([data])                                   
                 c.execute('SELECT * FROM items WHERE model_number LIKE (?)', (data,))
                 results = c.fetchall()
                 if results:
                         for result in results:
-                                print(results)
                                 print(result)
                                 error="Change the form as you please"
-                                return render_template('editEntry.html', error=error, data=result, form=form)
+                                form.itemCategory.default = result[11]
+                                form.measurements.default = result[3]
+                                form.measurements2.default = result[5] 
+                                form.measurements3.default = result[7]
+                                form.measurements4.default = result[9]
+
+                                if request.method ==  'POST':
+                                        item_name =(form.itemName.data)
+                                        item_Ref =(form.modelRef.data)
+                                        model_number =(form.modelNumber.data)
+                                        item_category =(form.itemCategory.data)
+                                        measurement1=(form.measurements.data)
+                                        print(measurement1)
+                                        value1=(form.value.data)
+                                        measurement2=(form.measurements2.data)
+                                        print(measurement2)
+                                        value2=(form.value2.data)
+                                        measurement3=(form.measurements3.data)
+                                        print(measurement3)
+                                        value3=(form.value3.data)
+                                        measurement4=(form.measurements4.data)
+                                        print(measurement4)
+                                        value4=(form.value4.data)
+                                        newEntry=[(item_name, model_number, item_Ref, item_category, measurement1, value1, measurement2, value2, measurement3, value3, measurement4, value4, data)]
+                                        print(newEntry)
+                                        with conn:
+                                                try:
+                                                                            
+                                                        c.executemany('''UPDATE items SET item_name=?, model_number=?, model_ref=?, item_category=?, measurement1=?, value1=?, measurement2=?, value2=?, measurement3=?, value3=?, measurement4=?, value4=? WHERE model_number =?;''', newEntry)
+                                                        message = "You have updated " + data + " in the database. "
+                                                        flash(message)
+                                                        return redirect(url_for('adminDash'))
+                                                except Exception as e: print(e)
+                                        return render_template('editEntry.html', error=error, data=result, form=form)
+
+
+                                else:
+                                        return render_template('editEntry.html', error=error, data=result, form=form)
                 else:
                         error="Something has gone wrong"
                         return render_template('editEntry.html', form=form, error=error)
@@ -138,7 +174,22 @@ def editEntry(data):
         else:
                 flash('Please Login to continue')
                 return redirect('login')
-        
+
+@app.route('/deleteEntry/<data>', methods=['GET', 'POST']) 
+def deleteEntry(data):
+        if g.username:                
+                conn = sqlite3.connect('static/data.sqlite')                        
+                c = conn.cursor()
+                print(data)     
+                c.execute('DELETE FROM items WHERE model_number=?', [data])
+                conn.commit()
+                c.close()
+                messages="You have deleted that entry"
+                flash(messages)
+                return redirect(url_for('adminDash'))
+        else:
+                flash('Please Login to continue')
+                return redirect('login')
 
 @app.route('/viewItem/', methods=['GET', 'POST'])
 def viewItem():
@@ -195,7 +246,7 @@ def addEntry():
                         value3=(form.value3.data)
                         measurement4=(form.measurements4.data)
                         value4=(form.value4.data)
-                        entry=[(item_name, item_Ref, model_number, item_category, measurement1, value1, measurement2, value2, measurement3, value3, measurement4, value4)]
+                        entry=[(item_name, model_number, item_Ref, item_category, measurement1, value1, measurement2, value2, measurement3, value3, measurement4, value4)]
                         print(entry)                             
                         print(table)
 
@@ -204,7 +255,7 @@ def addEntry():
                                 c = conn.cursor()
                                 try:
                                         insert_into = '''INSERT INTO items (item_name, model_number, model_ref, item_category,  measurement1, value1, measurement2, value2, measurement3, value3, measurement4, value4 ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)'''                      
-                                        conn.executemany(insert_into, entry)
+                                        c.executemany(insert_into, entry)
                                         message = "You have added " + item_name + " to the database."
                                         flash(message)
                                         return redirect(url_for('adminDash'))
@@ -286,9 +337,6 @@ def reset_with_token(token):
  
     return render_template('reset_password_with_token.html', form=form, token=token)
 
-@app.route('/deleteEntry/')
-def deleteEntry():
-        return render_template('deleteEntry.html')
 
 if __name__ == "__main__":
       app.run('localhost', 5000, debug=True)

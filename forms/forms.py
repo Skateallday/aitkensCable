@@ -102,13 +102,13 @@ class editModel(FlaskForm):
                                                          ('channel_support', 'Channel Support'), ('dado_trunking', 'Dado Trunking'),
                                                          ('Floor_Service_Box', 'Floor Service Box'), ('lighting_trunking', 'Lighting Trunking'),
                                                          ('plastic_conduit', 'Plastic Conduit'), ('roof_support_systems', 'Roof Support Systems')], validators=[DataRequired()])
-    measurements = SelectField('Measurements', choices=[('None', 'None'),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
+    measurements = SelectField('Measurements', choices=[('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
                                                         ('Diameter', 'Diameter'), ('Finish', 'Finish'),
                                                         ('Material', 'Material'), ('Size', 'Size'),
                                                         ('Thickeness', 'Thickness'), ('Thread', 'Thread'),
                                                         ('Pack_Quantity', 'Pack Quantity'), 
                                                         ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
-                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired(), Email()])
+                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired()])
     value = StringField('value', validators=[DataRequired(), Length(min=2, max=30)])
     measurements2 = SelectField('Measurements', choices=[('None', 'None'),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
                                                         ('Diameter', 'Diameter'), ('Finish', 'Finish'),
@@ -116,7 +116,7 @@ class editModel(FlaskForm):
                                                         ('Thickeness', 'Thickness'), ('Thread', 'Thread'),
                                                         ('Pack_Quantity', 'Pack Quantity'), 
                                                         ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
-                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired(), Email()])
+                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired()])
     value2 = StringField('value', validators=[DataRequired(), Length(min=2, max=30)])
     measurements3 = SelectField('Measurements', choices=[('None', 'None'),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
                                                         ('Diameter', 'Diameter'), ('Finish', 'Finish'),
@@ -124,7 +124,7 @@ class editModel(FlaskForm):
                                                         ('Thickeness', 'Thickness'), ('Thread', 'Thread'),
                                                         ('Pack_Quantity', 'Pack Quantity'), 
                                                         ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
-                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired(), Email()])
+                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired()])
     value3 = StringField('value', validators=[DataRequired(), Length(min=2, max=30)])
     measurements4 = SelectField('Measurements', choices=[('None', 'None'),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
                                                         ('Diameter', 'Diameter'), ('Finish', 'Finish'),
@@ -132,10 +132,8 @@ class editModel(FlaskForm):
                                                         ('Thickeness', 'Thickness'), ('Thread', 'Thread'),
                                                         ('Pack_Quantity', 'Pack Quantity'), 
                                                         ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
-                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired(), Email()])
+                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired()])
     value4 = StringField('value', validators=[DataRequired(), Length(min=2, max=30)])
-
-
 
     submit = SubmitField('Edit Entry')
 

@@ -14,6 +14,8 @@
   <h1>Edit Entry</h1>
   <p class="important">
     <div class="container">
+        <button class="btn btn-danger" id="deleteBtn"><a class="btn btn-danger disabled" id="disabledBtn" href={{url_for('deleteEntry', data=data[1])}}>Delete Entry</a></button>
+
 <form method="POST" action='' enctype="multipart/form-data">
     {{ form.hidden_tag() }} {{ form.csrf_token() }}
 
@@ -49,7 +51,7 @@
     <span class="errors">[{{ error }}]</span>
     {% endfor %}
     {% endif %}
-    {{ form.itemCategory(class="form-control", select=data[11]) }}    
+    {{ form.itemCategory(class="form-control") }}    
 
     <label for="measurements">Item Measurements</label>
     {% if request.method == 'POST' %}
@@ -121,4 +123,19 @@
 
 </form>
     </div>
+
+    <script>
+
+        document.getElementById("deleteBtn").addEventListener("click", function() {
+          var retVal = confirm("Once an entry has been deleted it can not be restored and will need to be re-entered through the add entry form.\nDo you wish to delete?");
+               if( retVal == true ) {
+                  document.getElementById("disabledBtn").classList.remove("disabled");
+                  return true;
+               } else {
+                  alert("User does not want to delete!");
+                  return false;
+               }
+        });
+            </script>
 {% endblock %}
+

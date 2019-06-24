@@ -56,20 +56,16 @@
 
 
 
-<td><a href={{url_for('editEntry', data=row[1])}} class="btn btn-warning">Edit entry</button></td>
-<td><button class="btn btn-danger">Delete Entry</button></td>
-        </tr>{% endfor %}
-
-					   
-          
+<td><a href={{url_for('editEntry', data=row[1])}} class="btn btn-danger">Edit/Delete Entry</button></td>
+        </tr>{% endfor %}    
                 
                               
             	
 
     </table>
 
-    <a href={{url_for('addEntry')}}>Add Entry</a>
-    <a href={{url_for('deleteEntry')}}>Delete Entry</a>
-    <a href={{url_for('viewItem')}}>View Items</a>
+    <a class="btn btn-primary" href={{url_for('addEntry')}}>Add Entry</a>
+
+
 
 {% endblock %}

@@ -2,9 +2,18 @@
 
 {% block content %}
 
-{% for message in get_flashed_messages() %}
-{{ message }}
-{% endfor %}
+
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+      var messages = {{ messages | safe }};
+      for (var i=0; i<messages.length; i++) {
+        alert(messages[i]);
+      }
+    </script>
+  {% endif %}
+{% endwith %}
 
   <h1>Admin Dashboard</h1>
   <p class="important">
@@ -12,7 +21,6 @@
     </p>
 
     <a class="btn btn-primary" href={{url_for('addEntry')}}>Add Entry</a>
-    <a class="btn btn-danger" href={{url_for('deleteEntry')}}>Delete Entry</a>
     <a class="btn btn-warning" href={{url_for('viewItem')}}>View Entries</a>
 
 {% endblock %}
