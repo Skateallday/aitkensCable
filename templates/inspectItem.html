@@ -1,0 +1,40 @@
+{% extends "template.html" %} {% block content %} {{ error }} {% for message in get_flashed_messages() %}
+<div class="alert alert-warning">
+    <button type="button" class="close" data-dismiss="alert">
+            &times;
+          </button> {{ message }}
+</div>
+{% endfor %}
+<div class="container">
+    <h1>{{ itemName }}</h1>
+
+    <div class="row">
+        <div class="col-sm-5">
+            <img class="productPageImages" src="{{url_for('static', filename='uploads/')}}{{itemName}}.jpg">
+        </div>
+        <div class="col-sm-7">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quod qui asperiores, cum laborum ducimus explicabo soluta omnis facilis corporis itaque deserunt aliquam vel voluptatem perferendis commodi ex quibusdam assumenda voluptatibus!
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1">
+                <img class="productPageImages" src="{{url_for('static', filename='uploads/')}}{{itemName}}.jpg">
+            </div>
+        <div class="col-sm-1">
+                <img class="productPageImages" src="{{url_for('static', filename='uploads/')}}{{itemName}}.jpg">
+            </div>
+        <div class="col-sm-1">
+                <img class="productPageImages" src="{{url_for('static', filename='uploads/')}}{{itemName}}.jpg">
+            </div>
+        <div class="col-sm-1">
+                <img class="productPageImages" src="{{url_for('static', filename='uploads/')}}{{itemName}}.jpg">
+            </div>
+        <div class="col-sm-1">
+                <img class="productPageImages" src="{{url_for('static', filename='uploads/')}}{{itemName}}.jpg">
+            </div>
+        <div class="col-sm-7">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint aliquam cumque, tempore itaque maiores quaerat consequuntur nihil incidunt tempora quasi, necessitatibus fuga voluptatem, laboriosam dolorum. Dolorem officia consequuntur nihil excepturi?
+        </div>
+
+    </div>
+</div>
+{% endblock %}

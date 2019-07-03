@@ -1,4 +1,4 @@
-{% extends "template.html" %}
+{% extends "adminTemplate.html" %}
 
 {% block content %}
 {% for message in get_flashed_messages() %}
@@ -113,7 +113,10 @@
     {% endfor %}
     {% endif %}
     {{ form.value4(class="form-control") }} 
-   
+
+
+       {{ form.photo(class="btn btn-warning") }}
+
 
     {{ form.submit(class="btn btn-danger") }}
 

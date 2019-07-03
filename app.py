@@ -8,9 +8,10 @@ from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect, CSRFError
-from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm, viewItems, editModel
+from flask_wtf.file import FileField, FileRequired
+from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm, viewItems, editModel, searchData
 import sqlite3
-import ctypes 
+import ctypes  
 from itsdangerous import URLSafeTimedSerializer
 
 app = Flask(__name__)
@@ -25,6 +26,10 @@ mysql.init_app(app)
 app.config.from_object(Config)
 csrf = CSRFProtect(app)
 table =""
+UPLOAD_FOLDER = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+
 
 @app.before_request
 def before_request():
@@ -34,22 +39,78 @@ def before_request():
         if 'search' in session:
                 g.search = session['search']
 
-@app.route("/")
-@app.route("/Home")
-@app.route("/home")
+@app.route("/", methods=['GET', 'POST'])
+@app.route("/Home", methods=['GET', 'POST'])
+@app.route("/home", methods=['GET', 'POST'])
 def home():
         if g.username:
                 return render_template('adminDash.html', username=g.username)
         else:
-                return render_template('index.html')
+                form = searchData(request.form)
+                return render_template('index.html', form=form)
+
+@app.route("/search/", methods=['GET', 'POST'])
+def search():
+        form = searchData(request.form)
+        if request.method == 'POST':
+                conn =sqlite3.connect('static/data.sqlite')
+                c = conn.cursor()
+                searchedData = form.searchData.data
+                searchCatergory = form.searchCatergory.data
+                search=('''SELECT * FROM items WHERE ''' + searchCatergory + ''' LIKE (?)''')
+                c.execute(search, [searchedData])
+                rows = c.fetchall()
+                if rows:
+
+                        for row in rows:
+                                print(row)
+                                print(rows)
+                                results = rows
+                                return render_template('viewItems.html', results=results, form=form)
+                else:
+                        error="Sorry there are no results"
+                        return render_template('viewItems.html', error=error, form=form)
+        else:
+                return redirect("home")
+
+
+@app.route("/items/<search>", methods=['GET', 'POST'])
+def items(search):
+        print(search)
+        form = viewItems(request.form)
+        
+
+        if request.method == 'GET':
+                conn = sqlite3.connect('static/data.sqlite')                
+                c = conn.cursor()
+
+                c.execute('SELECT * FROM items WHERE item_category LIKE (?)', (search,))
+                rows = c.fetchall()
+                if rows:
+
+                        for row in rows:
+                                print(row)
+                                print(rows)
+                                results = rows
+                                return render_template('items.html', results=results, form=form)
+                else:
+                        flash("There has been an error, please try again")
+                        return render_template('items.html', form=form)
+                                
+        else:
+                flash("There has been an error, please try again")
+                return render_template('items.html', form=form)
+
+@app.route("/inspectItem/<data>", methods=['GET', 'POST'])
+def inspectItem(data):
+        print(data)
+        return render_template("inspectItem.html", itemName=data)
 
 @app.route('/register/', methods=["GET","POST"])
 def register():
         if g.username:
-                username=g.username
-                return render_template('adminDash.html', username=username)
-        else:
                 form = registration(request.form)
+
                 if request.method == 'POST':
                         pw_hash =bcrypt.generate_password_hash(form.password.data)
                         newEntry = [((form.username.data), pw_hash, (form.emailAddress.data))]
@@ -70,6 +131,10 @@ def register():
                                 return redirect('login')
                         return render_template("register.html", form=form)
                 return render_template("register.html", form=form)
+        else:
+                flash('Please login to register other memebers')
+                return redirect('login') 
+                
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -103,7 +168,7 @@ def logout():
         session['logged_in'] = True
         session.clear()
         flash("You have successfully logged out.")
-        return render_template("index.html")
+        return redirect('home')
 
 
 @app.route('/adminDash/', methods=['GET', 'POST'])
@@ -230,7 +295,7 @@ def addEntry():
         if g.username:
                 form = addModel(request.form)
 
-                if request.method == 'POST':   
+                if request.method == 'POST':                        
                         table=(form.itemCategory.data)                     
                         item_name =(form.itemName.data)
                         print(item_name)
@@ -246,6 +311,14 @@ def addEntry():
                         value3=(form.value3.data)
                         measurement4=(form.measurements4.data)
                         value4=(form.value4.data)
+                        f = request.files.get('photo')
+                        print(f)
+                        filename = secure_filename(f.filename)   
+                        filetype = filename.split('.')
+                        uploadFile = item_name + ('.') + filetype[1]                    
+                        f.save(os.path.join
+                                (app.config['UPLOAD_FOLDER'], uploadFile
+                        ))
                         entry=[(item_name, model_number, item_Ref, item_category, measurement1, value1, measurement2, value2, measurement3, value3, measurement4, value4)]
                         print(entry)                             
                         print(table)

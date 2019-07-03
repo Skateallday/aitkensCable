@@ -6,6 +6,8 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 from wtforms.fields.html5 import DateField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms_components import DateTimeField, DateRange
+from flask_wtf.file import FileField, FileRequired
+from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 from datetime import datetime, date, timedelta
 from flask import session
@@ -35,7 +37,7 @@ class viewItems(FlaskForm):
                                                          ('channel_support', 'Channel Support'), ('dado_trunking', 'Dado Trunking'),
                                                          ('Floor_Service_Box', 'Floor Service Box'), ('lighting_trunking', 'Lighting Trunking'),
                                                          ('plastic_conduit', 'Plastic Conduit'), ('roof_support_systems', 'Roof Support Systems')], validators=[DataRequired()])
-    submit = SubmitField('Choose form')
+    submit = SubmitField('Choose Category')
     
 
 class addModel(FlaskForm):
@@ -86,10 +88,22 @@ class addModel(FlaskForm):
                                                         ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
                                                          ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired(), Email()])
     value4 = StringField('value', validators=[DataRequired(), Length(min=2, max=30)])
+    photo = FileField('Images Uploader',validators=[FileRequired()])
+
+
 
 
 
     submit = SubmitField('Add Entry')
+
+class searchData(FlaskForm):
+    searchData = StringField('searchData', validators=[DataRequired(), Length(min=4, max=30)])
+    searchParameter = SelectField('searchCategory', choices=[('cable_basket', 'Cable Basket'), ('cable_Ladder', 'Cable Ladder'),
+                                                         ('cable_tray', 'Cable Tray'), ('cable_trunking', 'Cable Trunking'),
+                                                         ('channel_support', 'Channel Support'), ('dado_trunking', 'Dado Trunking'),
+                                                         ('Floor_Service_Box', 'Floor Service Box'), ('lighting_trunking', 'Lighting Trunking'),
+                                                         ('plastic_conduit', 'Plastic Conduit'), ('roof_support_systems', 'Roof Support Systems')], validators=[DataRequired()])
+    submit = SubmitField('Search!')
 
 
 class editModel(FlaskForm):
@@ -136,4 +150,5 @@ class editModel(FlaskForm):
     value4 = StringField('value', validators=[DataRequired(), Length(min=2, max=30)])
 
     submit = SubmitField('Edit Entry')
+
 
