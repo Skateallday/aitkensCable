@@ -39,6 +39,9 @@ class viewItems(FlaskForm):
                                                          ('plastic_conduit', 'Plastic Conduit'), ('roof_support_systems', 'Roof Support Systems')], validators=[DataRequired()])
     submit = SubmitField('Choose Category')
     
+class addCategory(FlaskForm):
+    categoryName =StringField('categoryName', validators=[DataRequired(), Length(min=2, max=30)])
+    submit = SubmitField('Add Category')
 
 class addModel(FlaskForm):
     itemName = StringField('itemName', validators=[DataRequired(), Length(min=2, max=30)])

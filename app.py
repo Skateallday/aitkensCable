@@ -9,7 +9,7 @@ from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect, CSRFError
 from flask_wtf.file import FileField, FileRequired
-from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm, viewItems, editModel, searchData
+from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm, viewItems, editModel, searchData, addCategory
 import sqlite3
 import ctypes  
 from itsdangerous import URLSafeTimedSerializer
@@ -104,7 +104,18 @@ def items(search):
 @app.route("/inspectItem/<data>", methods=['GET', 'POST'])
 def inspectItem(data):
         print(data)
-        return render_template("inspectItem.html", itemName=data)
+        conn = sqlite3.connect('static/data.sqlite')                
+        c = conn.cursor()
+
+        c.execute('SELECT * FROM items WHERE item_name LIKE (?)', (data,))
+        rows = c.fetchall()
+        if rows:
+
+                for row in rows:
+                        print(row)
+                        print(rows)
+                        results = rows
+        return render_template("inspectItem.html", itemName=data, results=results)
 
 @app.route('/register/', methods=["GET","POST"])
 def register():
@@ -339,6 +350,18 @@ def addEntry():
         return render_template('addEntry.html', form=form)
 
 
+
+@app.route('/addCategory/', methods=['GET', 'POST'])
+def CategoryExtension():
+        if g.username:
+                form = addCategory(request.form)
+
+                if request.method == 'POST':                        
+                        
+                        return render_template('addCategory.html', form=form)                                        
+                else:
+                        return render_template('addCategory.html', form=form)
+        return render_template('addCategory.html', form=form)
 
 
 
