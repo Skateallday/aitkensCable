@@ -9,36 +9,10 @@
           {{ message }}
       </div>
     {% endfor %}
-  <h1>Index</h1>
+  <h1>Homepage</h1>
   <p class="important">
-    Welcome to Aitkens Wholesale.</p>
+    Welcome to Aitkens Electrics.</p>
     <p></p>
 
-    <form class="searchForm" method="POST" action='' enctype="multipart/form-data">
-                        
-
-      {{ form.hidden_tag() }} {{ form.csrf_token() }}
-      <div class="col-sm-9">
-<div class="active-cyan-3 active-cyan-4 mb-4">
-  {% if request.method == 'POST' %}
-  {% for error in form.searchData.errors %}
-  <span class="errors">[{{ error }}]</span>
-  {% endfor %}
-  {% endif %}
-  {{ form.searchData(class="form-control", placeholder="Search Here!") }}  
-</div></div><div class="col-sm-2">
-
-  {% if request.method == 'POST' %}
-  {% for error in form.searchParameter.errors %}
-  <span class="errors">[{{ error }}]</span>
-  {% endfor %}
-  {% endif %}
-  {{ form.searchParameter(class="form-control") }} 
-</div><div class="col-sm-1">
-  {{ form.submit(class="btn btn-warning") }}
-</div>
-<i class="fas fa-search" aria-hidden="true"></i>
-      </form> 
-    <a href={{url_for('login')}}>Log in</a>
     
 {% endblock %}

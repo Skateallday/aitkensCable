@@ -101,11 +101,6 @@ class addModel(FlaskForm):
 
 class searchData(FlaskForm):
     searchData = StringField('searchData', validators=[DataRequired(), Length(min=4, max=30)])
-    searchParameter = SelectField('searchCategory', choices=[('cable_basket', 'Cable Basket'), ('cable_Ladder', 'Cable Ladder'),
-                                                         ('cable_tray', 'Cable Tray'), ('cable_trunking', 'Cable Trunking'),
-                                                         ('channel_support', 'Channel Support'), ('dado_trunking', 'Dado Trunking'),
-                                                         ('Floor_Service_Box', 'Floor Service Box'), ('lighting_trunking', 'Lighting Trunking'),
-                                                         ('plastic_conduit', 'Plastic Conduit'), ('roof_support_systems', 'Roof Support Systems')], validators=[DataRequired()])
     submit = SubmitField('Search!')
 
 

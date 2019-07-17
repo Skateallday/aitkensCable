@@ -43,22 +43,40 @@ def before_request():
 @app.route("/Home", methods=['GET', 'POST'])
 @app.route("/home", methods=['GET', 'POST'])
 def home():
+        title="Homepage for Aitken's Electrical"
         if g.username:
                 return render_template('adminDash.html', username=g.username)
         else:
-                form = searchData(request.form)
-                return render_template('index.html', form=form)
+                form2 = searchData(request.form)
+                if request.method == 'POST':
+                        conn =sqlite3.connect('static/data.sqlite')
+                        c = conn.cursor()
+                        searchedData = form2.searchData.data
+                        search=('''SELECT * FROM items WHERE item_name LIKE ?''')
+                        c.execute(search, ['%'+searchedData+'%'])
+                        rows = c.fetchall()
+                        if rows:
+
+                                for row in rows:
+                                        print(row)
+                                        print(rows)
+                                        results = rows
+                                        return render_template('search.html',title=title, results=results, form2=form2)
+                        else:
+                                error="Sorry there are no results"
+                                return render_template('search.html',title=title, error=error, form2=form2)
+                return render_template('index.html',title=title, form2=form2)
 
 @app.route("/search/", methods=['GET', 'POST'])
 def search():
-        form = searchData(request.form)
+        form2 = searchData(request.form)
+        title="Aitken's Electrical Search Results"
         if request.method == 'POST':
                 conn =sqlite3.connect('static/data.sqlite')
                 c = conn.cursor()
-                searchedData = form.searchData.data
-                searchCatergory = form.searchCatergory.data
-                search=('''SELECT * FROM items WHERE ''' + searchCatergory + ''' LIKE (?)''')
-                c.execute(search, [searchedData])
+                searchedData = form2.searchData.data
+                search=('''SELECT * FROM items WHERE item_name LIKE ?''')
+                c.execute(search, ['%'+searchedData+'%'])
                 rows = c.fetchall()
                 if rows:
 
@@ -66,20 +84,23 @@ def search():
                                 print(row)
                                 print(rows)
                                 results = rows
-                                return render_template('viewItems.html', results=results, form=form)
+                                return render_template('search.html', title=title, results=results, form2=form2)
                 else:
                         error="Sorry there are no results"
-                        return render_template('viewItems.html', error=error, form=form)
+                        return render_template('search.html', title=title, error=error, form2=form2)
         else:
-                return redirect("home")
+                error="Sorry there are no results"
+                return render_template('search.html',title=title, error=error, form2=form2)
+        return redirect('home')
 
 
 @app.route("/items/<search>", methods=['GET', 'POST'])
 def items(search):
         print(search)
+        title="Aitken's Electrical Item Results"
         form = viewItems(request.form)
+        form2 = searchData(request.form)   
         
-
         if request.method == 'GET':
                 conn = sqlite3.connect('static/data.sqlite')                
                 c = conn.cursor()
@@ -92,30 +113,68 @@ def items(search):
                                 print(row)
                                 print(rows)
                                 results = rows
-                                return render_template('items.html', results=results, form=form)
+                                return render_template('items.html', title=title, results=results, form2=form2, form=form)
                 else:
                         flash("There has been an error, please try again")
-                        return render_template('items.html', form=form)
+                        return render_template('items.html', title=title, form2=form2, form=form)
                                 
+        if request.method == 'POST':
+                conn =sqlite3.connect('static/data.sqlite')
+                c = conn.cursor()
+                searchedData = form2.searchData.data
+                search=('''SELECT * FROM items WHERE item_name LIKE (?)''')
+                c.execute(search, ['%'+searchedData+'%'])
+                rows = c.fetchall()
+                if rows:
+
+                        for row in rows:
+                                print(row)
+                                print(rows)
+                                results = rows
+                                return render_template('search.html', title=title, results=results, form2=form2)
+                else:
+                        error="Sorry there are no results"
+                        return render_template('search.html',title=title, error=error, form2=form2)     
         else:
                 flash("There has been an error, please try again")
-                return render_template('items.html', form=form)
+                return render_template('items.html',form2=form2, title=title, form=form)
 
 @app.route("/inspectItem/<data>", methods=['GET', 'POST'])
 def inspectItem(data):
+        form2 = searchData(request.form)
         print(data)
+        title="Aitken's Electrical Item Information"
         conn = sqlite3.connect('static/data.sqlite')                
         c = conn.cursor()
 
         c.execute('SELECT * FROM items WHERE item_name LIKE (?)', (data,))
         rows = c.fetchall()
-        if rows:
+        for row in rows:
+                print(row)
+                print(rows)
+                print('here')
+                results = rows
+                return render_template("inspectItem.html", itemName=data, title=title, form2=form2, results=results)
+                              
+        if request.method == 'POST':
+                conn =sqlite3.connect('static/data.sqlite')
+                c = conn.cursor()
+                searchedData = form2.searchData.data
+                search=('''SELECT * FROM items WHERE item_name LIKE (?)''')
+                c.execute(search, ['%'+searchedData+'%'])
+                rows = c.fetchall()
+                if rows:
 
-                for row in rows:
-                        print(row)
-                        print(rows)
-                        results = rows
-        return render_template("inspectItem.html", itemName=data, results=results)
+                        for row in rows:
+                                print(row)
+                                print(rows)
+                                results = rows
+                                return render_template('search.html', results=results, title=title, form2=form2)
+                else:
+                        error="Sorry there are no results"
+                        return render_template('search.html', error=error,title=title, form2=form2)     
+        return render_template("inspectItem.html", itemName=data, title=title, form2=form2)
+
 
 @app.route('/register/', methods=["GET","POST"])
 def register():
@@ -141,7 +200,7 @@ def register():
                                 flash((form.username.data) + " Successfully Registered!")
                                 return redirect('login')
                         return render_template("register.html", form=form)
-                return render_template("register.html", form=form)
+                return render_template("register.html",  form=form)
         else:
                 flash('Please login to register other memebers')
                 return redirect('login') 
@@ -344,7 +403,7 @@ def addEntry():
                                         flash(message)
                                         return redirect(url_for('adminDash'))
                                 except Exception as e: print(e)
-                        return render_template('addEntry.html', form=form)                                        
+                        return render_template('addEntry.html',  form=form)                                        
                 else:
                         return render_template('addEntry.html', form=form)
         return render_template('addEntry.html', form=form)

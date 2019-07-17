@@ -1,3 +1,31 @@
+#header{
+    background:#003e71;
+    color:#f2812c;
+}
+
+h1{    font-family: 'Gothic A1', sans-serif;
+}
+h2{font-family: 'Gothic A1', sans-serif;
+}
+h3{font-family: 'Gothic A1', sans-serif;
+}
+h4{font-family: 'Gothic A1', sans-serif;
+}
+h5{font-family: 'Gothic A1', sans-serif;
+
+}
+p{font-family: 'Gothic A1', sans-serif;
+}
+
+.nav{
+    color:#003e71;
+    background:#f2812c;
+}
+
+.logo{
+    width:100%;
+    height:auto;
+}
 .productPageImages{
     height:auto;
     width:100%;
@@ -5,4 +33,14 @@
 }
 .searchForm{
     background:#323C41;
+}
+
+
+#footer{
+  
+  width: 100%;
+  padding:30px;
+  text-align: center;
+    background:#003e71;
+    color:#f2812c;
 }

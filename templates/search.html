@@ -3,7 +3,6 @@
 {% block content %}
 
 {{ error }}
-
 {% for message in get_flashed_messages() %}
       <div class="alert alert-warning">
           <button type="button" class="close" data-dismiss="alert">
@@ -12,7 +11,7 @@
           {{ message }}
       </div>
     {% endfor %}
-  <h1>View Products</h1>
+  <h1>Search Products</h1>
         <div class="row">
             <div class="col-sm-12">
 
