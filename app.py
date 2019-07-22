@@ -54,7 +54,7 @@ def home():
                         conn =sqlite3.connect('static/data.sqlite')
                         c = conn.cursor()
                         searchedData = form2.searchData.data
-                        search=('''SELECT * FROM items WHERE item_name LIKE ?''')
+                        search=('''SELECT DISTINCT item_name FROM items WHERE item_name LIKE ?''')
                         c.execute(search, ['%'+searchedData+'%'])
                         rows = c.fetchall()
                         if rows:
@@ -80,7 +80,7 @@ def prefab():
                         conn =sqlite3.connect('static/data.sqlite')
                         c = conn.cursor()
                         searchedData = form2.searchData.data
-                        search=('''SELECT * FROM items WHERE item_name LIKE ?''')
+                        search=('''SELECT DISTINCT item_name FROM items WHERE item_name LIKE ?''')
                         c.execute(search, ['%'+searchedData+'%'])
                         rows = c.fetchall()
                         if rows:
@@ -106,7 +106,7 @@ def stockist():
                         conn =sqlite3.connect('static/data.sqlite')
                         c = conn.cursor()
                         searchedData = form2.searchData.data
-                        search=('''SELECT * FROM items WHERE item_name LIKE ?''')
+                        search=('''SELECT DISTINCT item_name FROM items WHERE item_name LIKE ?''')
                         c.execute(search, ['%'+searchedData+'%'])
                         rows = c.fetchall()
                         if rows:
@@ -134,7 +134,7 @@ def contact():
                         conn =sqlite3.connect('static/data.sqlite')
                         c = conn.cursor()
                         searchedData = form2.searchData.data
-                        search=('''SELECT * FROM items WHERE item_name LIKE ?''')
+                        search=('''SELECT DISTINCT item_name FROM items WHERE item_name LIKE ?''')
                         c.execute(search, ['%'+searchedData+'%'])
                         rows = c.fetchall()
                         if rows:
@@ -157,7 +157,7 @@ def search():
                 conn =sqlite3.connect('static/data.sqlite')
                 c = conn.cursor()
                 searchedData = form2.searchData.data
-                search=('''SELECT * FROM items WHERE item_name LIKE ?''')
+                search=('''SELECT DISTINCT item_name FROM items WHERE item_name LIKE ?''')
                 c.execute(search, ['%'+searchedData+'%'])
                 rows = c.fetchall()
                 if rows:
@@ -187,7 +187,7 @@ def items(search):
                 conn = sqlite3.connect('static/data.sqlite')                
                 c = conn.cursor()
 
-                c.execute('SELECT * FROM items WHERE item_category LIKE (?)', (search,))
+                search=('''SELECT DISTINCT item_name FROM items WHERE item_name LIKE ?''')
                 rows = c.fetchall()
                 if rows:
 
@@ -204,7 +204,7 @@ def items(search):
                 conn =sqlite3.connect('static/data.sqlite')
                 c = conn.cursor()
                 searchedData = form2.searchData.data
-                search=('''SELECT * FROM items WHERE item_name LIKE (?)''')
+                search=('''SELECT DISTINCT item_name FROM items WHERE item_name LIKE ?''')
                 c.execute(search, ['%'+searchedData+'%'])
                 rows = c.fetchall()
                 if rows:
@@ -242,7 +242,7 @@ def inspectItem(data):
                 conn =sqlite3.connect('static/data.sqlite')
                 c = conn.cursor()
                 searchedData = form2.searchData.data
-                search=('''SELECT * FROM items WHERE item_name LIKE (?)''')
+                search=('''SELECT DISTINCT item_name FROM items WHERE item_name LIKE ?''')
                 c.execute(search, ['%'+searchedData+'%'])
                 rows = c.fetchall()
                 if rows:
