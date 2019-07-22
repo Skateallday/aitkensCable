@@ -57,17 +57,12 @@ class addModel(FlaskForm):
     modelNumber = StringField('modelNumber', validators=[DataRequired(), Length(min=2, max=30)])
     modelRef = StringField('modelRef', validators=[DataRequired(), Length(min=2, max=30)])
 
-    itemCategory = SelectField('itemCategory',   choices=[ ('cable_basket', 'Cable Basket'), ('cable_Ladder', 'Cable Ladder'),
-                                                         ('cable_tray', 'Cable Tray'), ('cable_trunking', 'Cable Trunking'),
-                                                         ('channel_support', 'Channel Support'), ('dado_trunking', 'Dado Trunking'),
-                                                         ('Floor_Service_Box', 'Floor Service Box'), ('lighting_trunking', 'Lighting Trunking'),
-                                                         ('plastic_conduit', 'Plastic Conduit'), ('roof_support_systems', 'Roof Support Systems')], validators=[DataRequired()])
+    itemCategory = SelectField('itemCategory',   choices=[ ('Cable Basket', 'Cable Basket'), ('Cable Ladder', 'Cable Ladder'),
+                                                         ('Cable Tray', 'Cable Tray'), ('Cable Trunking', 'Cable Trunking'),
+                                                         ('Channel Support', 'Channel Support'), ('Dado Trunking', 'Dado Trunking'),
+                                                         ('Floor Service Box', 'Floor Service Box'), ('Lighting Trunking', 'Lighting Trunking'),
+                                                         ('Plastic Conduit', 'Plastic Conduit'), ('Roof Support Systems', 'Roof Support Systems')], validators=[DataRequired()])
 
-    itemCategory = SelectField('itemCategory',   choices=[('cable_basket', 'Cable Basket'), ('cable_Ladder', 'Cable Ladder'),
-                                                         ('cable_tray', 'Cable Tray'), ('cable_trunking', 'Cable Trunking'),
-                                                         ('channel_support', 'Channel Support'), ('dado_trunking', 'Dado Trunking'),
-                                                         ('Floor_Service_Box', 'Floor Service Box'), ('lighting_trunking', 'Lighting Trunking'),
-                                                         ('plastic_conduit', 'Plastic Conduit'), ('roof_support_systems', 'Roof Support Systems')], validators=[DataRequired()])
     measurements = SelectField('Measurements', choices=[('None', 'None'),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
                                                         ('Diameter', 'Diameter'), ('Finish', 'Finish'),
                                                         ('Material', 'Material'), ('Size', 'Size'),
@@ -82,8 +77,8 @@ class addModel(FlaskForm):
                                                         ('Thickeness', 'Thickness'), ('Thread', 'Thread'),
                                                         ('Pack_Quantity', 'Pack Quantity'), 
                                                         ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
-                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired(), Email()])
-    value2 = StringField('value', validators=[DataRequired(), Length(min=2, max=30)])
+                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[ Email()])
+    value2 = StringField('value', validators=[ Length(min=2, max=30)])
     measurements3 = SelectField('Measurements', choices=[('None', 'None'),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
                                                         ('Diameter', 'Diameter'), ('Finish', 'Finish'),
                                                         ('Material', 'Material'), ('Size', 'Size'),
@@ -91,7 +86,7 @@ class addModel(FlaskForm):
                                                         ('Pack_Quantity', 'Pack Quantity'), 
                                                         ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
                                                          ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired(), Email()])
-    value3 = StringField('value', validators=[DataRequired(), Length(min=2, max=30)])
+    value3 = StringField('value', validators=[Length(min=2, max=30)])
     measurements4 = SelectField('Measurements', choices=[('None', 'None'),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
                                                         ('Diameter', 'Diameter'), ('Finish', 'Finish'),
                                                         ('Material', 'Material'), ('Size', 'Size'),
@@ -99,7 +94,7 @@ class addModel(FlaskForm):
                                                         ('Pack_Quantity', 'Pack Quantity'), 
                                                         ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
                                                          ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired(), Email()])
-    value4 = StringField('value', validators=[DataRequired(), Length(min=2, max=30)])
+    value4 = StringField('value',  validators=[Length(min=2, max=30)])
     photo = FileField('Images Uploader',validators=[FileRequired()])
 
 

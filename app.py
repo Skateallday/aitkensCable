@@ -187,7 +187,7 @@ def items(search):
                 conn = sqlite3.connect('static/data.sqlite')                
                 c = conn.cursor()
 
-                search=('''SELECT DISTINCT item_name FROM items WHERE item_name LIKE ?''')
+                c.execute('SELECT DISTINCT item_name FROM items WHERE item_category LIKE (?)', (search,))
                 rows = c.fetchall()
                 if rows:
 
@@ -242,7 +242,7 @@ def inspectItem(data):
                 conn =sqlite3.connect('static/data.sqlite')
                 c = conn.cursor()
                 searchedData = form2.searchData.data
-                search=('''SELECT DISTINCT item_name FROM items WHERE item_name LIKE ?''')
+                search=('''SELECT * FROM items WHERE item_name LIKE (?)''')
                 c.execute(search, ['%'+searchedData+'%'])
                 rows = c.fetchall()
                 if rows:
