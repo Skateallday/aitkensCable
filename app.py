@@ -9,10 +9,12 @@ from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect, CSRFError
 from flask_wtf.file import FileField, FileRequired
-from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm, viewItems, editModel, searchData, addCategory
+from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm, viewItems, editModel, searchData, addCategory, contactForm
 import sqlite3
 import ctypes  
 from itsdangerous import URLSafeTimedSerializer
+from flask_mail import Mail, Message
+
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -66,6 +68,86 @@ def home():
                                 error="Sorry there are no results"
                                 return render_template('search.html',title=title, error=error, form2=form2)
                 return render_template('index.html',title=title, form2=form2)
+
+@app.route("/prefab", methods=['GET', 'POST'])
+def prefab():
+        title="Homepage for Aitken's Electrical"
+        if g.username:
+                return render_template('adminDash.html', username=g.username)
+        else:
+                form2 = searchData(request.form)
+                if request.method == 'POST':
+                        conn =sqlite3.connect('static/data.sqlite')
+                        c = conn.cursor()
+                        searchedData = form2.searchData.data
+                        search=('''SELECT * FROM items WHERE item_name LIKE ?''')
+                        c.execute(search, ['%'+searchedData+'%'])
+                        rows = c.fetchall()
+                        if rows:
+
+                                for row in rows:
+                                        print(row)
+                                        print(rows)
+                                        results = rows
+                                        return render_template('search.html',title=title, results=results, form2=form2)
+                        else:
+                                error="Sorry there are no results"
+                                return render_template('search.html',title=title, error=error, form2=form2)
+                return render_template('prefab.html',title=title, form2=form2)
+
+@app.route("/stockist", methods=['GET', 'POST'])
+def stockist():
+        title="Stockist Page for Aitken's Electrical"
+        if g.username:
+                return render_template('adminDash.html', username=g.username)
+        else:
+                form2 = searchData(request.form)
+                if request.method == 'POST':
+                        conn =sqlite3.connect('static/data.sqlite')
+                        c = conn.cursor()
+                        searchedData = form2.searchData.data
+                        search=('''SELECT * FROM items WHERE item_name LIKE ?''')
+                        c.execute(search, ['%'+searchedData+'%'])
+                        rows = c.fetchall()
+                        if rows:
+
+                                for row in rows:
+                                        print(row)
+                                        print(rows)
+                                        results = rows
+                                        return render_template('search.html',title=title, results=results, form2=form2)
+                        else:
+                                error="Sorry there are no results"
+                                return render_template('search.html',title=title, error=error, form2=form2)
+                return render_template('stockist.html',title=title, form2=form2)
+
+
+@app.route("/contact", methods=['GET', 'POST'])
+def contact():
+        title="Contact Page for Aitken's Electrical"
+        if g.username:
+                return render_template('adminDash.html', username=g.username)
+        else:
+                form = contactForm(request.form)
+                form2 = searchData(request.form)
+                if request.method == 'POST':
+                        conn =sqlite3.connect('static/data.sqlite')
+                        c = conn.cursor()
+                        searchedData = form2.searchData.data
+                        search=('''SELECT * FROM items WHERE item_name LIKE ?''')
+                        c.execute(search, ['%'+searchedData+'%'])
+                        rows = c.fetchall()
+                        if rows:
+
+                                for row in rows:
+                                        print(row)
+                                        print(rows)
+                                        results = rows
+                                        return render_template('search.html',title=title, results=results, form=form, form2=form2)
+                        else:
+                                error="Sorry there are no results"
+                                return render_template('search.html',title=title, error=error, form=form, form2=form2)
+                return render_template('contact.html',title=title, form=form, form2=form2)
 
 @app.route("/search/", methods=['GET', 'POST'])
 def search():

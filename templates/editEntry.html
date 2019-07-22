@@ -29,21 +29,23 @@
     {% endif %}
     {{ form.itemName(class="form-control", value=data[0]) }}
 
-    <label for="modelRef">Model Ref</label>
-    {% if request.method == 'POST' %}
-    {% for error in form.modelRef.errors %}
-    <span class="errors">[{{ error }}]</span>
-    {% endfor %}
-    {% endif %}
-    {{ form.modelRef(class="form-control", value=data[1]) }}
-
     <label for="modelNumber">Model Number</label>
     {% if request.method == 'POST' %}
     {% for error in form.modelNumber.errors %}
     <span class="errors">[{{ error }}]</span>
     {% endfor %}
     {% endif %}
-    {{ form.modelNumber(class="form-control", value=data[2]) }}
+    {{ form.modelNumber(class="form-control", value=data[1]) }}
+
+    <label for="modelRef">Model Ref</label>
+    {% if request.method == 'POST' %}
+    {% for error in form.modelRef.errors %}
+    <span class="errors">[{{ error }}]</span>
+    {% endfor %}
+    {% endif %}
+    {{ form.modelRef(class="form-control", value=data[2]) }}
+
+    
 
     <label for="itemCategory">Item Category</label>
     {% if request.method == 'POST' %}

@@ -1,0 +1,31 @@
+{% extends "template.html" %} {% block content %} {% for message in get_flashed_messages() %}
+<div class="alert alert-warning">
+    <button type="button" class="close" data-dismiss="alert">
+            &times;
+          </button> {{ message }}
+</div>
+{% endfor %}
+<h1>Contact Us</h1>
+<p>If your interested in becoming a stockist of Aitkens Cable Management Systems please fill in the form below and one of our sales team will be in touch asap..</p>
+<div class="col-sm-6">
+    <h3>Glasgow</h3>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2240.7112508677833!2d-4.200809!3d55.832971!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x936181283f33d796!2sAitkens+-+Glasgow+%2F+Leeds+%2F+Manchester+-+Leeds+%26+Manchester+depots+-+Manufactured+products+only!5e0!3m2!1sen!2suk!4v1563796066951!5m2!1sen!2suk" width="400" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
+    <h3>Leeds</h3>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d4713.689462438709!2d-1.610611!3d53.792251!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48795f21c7a3bce9%3A0x517e1786681e4bdc!2sSilver+Royd+Hill%2C+Leeds+LS12+4QQ%2C+UK!5e0!3m2!1sen!2sus!4v1563796286105!5m2!1sen!2sus" width="400" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
+    <h3>Manchester</h3>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d4750.406115986491!2d-2.321941!3d53.464831!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487bae86055ebbc9%3A0xb47509b1c8888c19!2sStretford%2C+Manchester+M17+1PR!5e0!3m2!1sen!2suk!4v1563796313624!5m2!1sen!2suk" width="400" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
+</div> <div class="col-sm-6">
+
+    <form class="contact" method="POST" enctype="multipart/form-data">
+
+        {{ form.hidden_tag() }} {{ form.csrf_token() }} {% if request.method == 'POST' %} {% for error in form.fullname.errors %}
+        <span class="errors">[{{ error }}]</span> {% endfor %} {% endif %} {{ form.fullname(class="form-control", placeholder="Full Name") }} {% if request.method == 'POST' %} {% for error in form.company.errors %}
+        <span class="errors">[{{ error }}]</span> {% endfor %} {% endif %} {{ form.company(class="form-control", placeholder="Company Name") }} {% if request.method == 'POST' %} {% for error in form.email.errors %}
+        <span class="errors">[{{ error }}]</span> {% endfor %} {% endif %} {{ form.email(class="form-control", placeholder="Email Address") }} {% if request.method == 'POST' %} {% for error in form.companyAddress.errors %}
+        <span class="errors">[{{ error }}]</span> {% endfor %} {% endif %} {{ form.companyAddress(class="form-control", placeholder="Company Address") }} {% if request.method == 'POST' %} {% for error in form.contactNumber.errors %}
+        <span class="errors">[{{ error }}]</span> {% endfor %} {% endif %} {{ form.contactNumber(class="form-control", placeholder="Contact Number") }} {% if request.method == 'POST' %} {% for error in form.message.errors %}
+        <span class="errors">[{{ error }}]</span> {% endfor %} {% endif %} {{ form.message(class="form-control", placeholder="Type your message here....") }} {{ form.submit(class="form-control") }}
+
+    </form>
+</div>
+{% endblock %}

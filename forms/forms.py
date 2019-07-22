@@ -13,6 +13,15 @@ from datetime import datetime, date, timedelta
 from flask import session
 from wtforms.validators import NumberRange
 
+class contactForm(FlaskForm):
+    fullname = StringField('fullname', validators=[DataRequired(), Length(min=2, max=30)])
+    company = StringField('company', validators=[DataRequired(), Length(min=2, max=30)])
+    email = StringField('email', validators=[DataRequired(), Email])
+    companyAddress = TextField('message', widget=TextArea(), validators=[DataRequired(),  Length(min=10, max=500)])
+    contactNumber = StringField('contactNumber', validators=[DataRequired(), Length(min=2, max=12)])
+    message = TextField('message', widget=TextArea(), validators=[DataRequired(),  Length(min=10, max=500)])
+    submit = SubmitField('Send')
+
 class loginForm(FlaskForm):
     username = StringField('username', validators=[DataRequired(), Length(min=2, max=30)])
     password = PasswordField('password', validators=[DataRequired(), Length(min=2, max=30)])
@@ -45,8 +54,8 @@ class addCategory(FlaskForm):
 
 class addModel(FlaskForm):
     itemName = StringField('itemName', validators=[DataRequired(), Length(min=2, max=30)])
-    modelRef = StringField('modelRef', validators=[DataRequired(), Length(min=2, max=30)])
     modelNumber = StringField('modelNumber', validators=[DataRequired(), Length(min=2, max=30)])
+    modelRef = StringField('modelRef', validators=[DataRequired(), Length(min=2, max=30)])
 
     itemCategory = SelectField('itemCategory',   choices=[ ('cable_basket', 'Cable Basket'), ('cable_Ladder', 'Cable Ladder'),
                                                          ('cable_tray', 'Cable Tray'), ('cable_trunking', 'Cable Trunking'),
@@ -106,8 +115,8 @@ class searchData(FlaskForm):
 
 class editModel(FlaskForm):
     itemName = StringField('itemName', validators=[DataRequired(), Length(min=2, max=30)])
-    modelRef = StringField('modelRef', validators=[DataRequired(), Length(min=2, max=30)])
     modelNumber = StringField('modelNumber', validators=[DataRequired(), Length(min=2, max=30)])
+    modelRef = StringField('modelRef', validators=[DataRequired(), Length(min=2, max=30)])
 
     itemCategory = SelectField('itemCategory',   choices=[('cable_basket', 'Cable Basket'), ('cable_Ladder', 'Cable Ladder'),
                                                          ('cable_tray', 'Cable Tray'), ('cable_trunking', 'Cable Trunking'),

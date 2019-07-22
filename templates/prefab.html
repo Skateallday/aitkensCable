@@ -1,0 +1,18 @@
+{% extends "template.html" %}
+{% block content %}
+
+      {% for message in get_flashed_messages() %}
+      <div class="alert alert-warning">
+          <button type="button" class="close" data-dismiss="alert">
+            &times;
+          </button>
+          {{ message }}
+      </div>
+    {% endfor %}
+  <h1>Pre-Fab and Special</h1>
+  <p>
+        Pre-fab examples below vary greatly depending on the site requirements, we encourage end-user contact through our customers as it is more often than not the engineers on a site that require specials or pre-fabricated items in order to speed up their project or get them round an unforeseen site problem..</p>
+    <p>With our CAD / CAM in-house design facilities every sheet metal part is designed and manufactured here with input from the client, end user and us. There normally needs to be sufficient quantity required of any requirements in order to make if financially viable for all parties.</p>
+
+    
+{% endblock %}

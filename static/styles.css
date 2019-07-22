@@ -21,7 +21,7 @@ p{font-family: 'Gothic A1', sans-serif;
     color:#003e71;
     background:#f2812c;
 }
-
+#myCarousel{margin:0;}
 .logo{
     width:100%;
     height:auto;
@@ -35,7 +35,11 @@ p{font-family: 'Gothic A1', sans-serif;
     background:#323C41;
 }
 
-
+.form-control{
+    margin:15px;
+    background:#003e71;
+    color:#f2812c;
+}
 #footer{
   
   width: 100%;
