@@ -120,6 +120,14 @@
     {% endif %}
     {{ form.value4(class="form-control", value=data[10]) }} 
    
+    <label for="imageName">Image Name</label>
+    {% if request.method == 'POST' %}
+    {% for error in form.imageName.errors %}
+    <span class="errors">[{{ error }}]</span>
+    {% endfor %}
+    {% endif %}
+    {{ form.imageName(class="form-control") }}
+
 
     {{ form.submit(class="btn btn-danger") }}
 

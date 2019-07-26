@@ -229,11 +229,9 @@ def inspectItem(data):
         c.execute('SELECT * FROM items WHERE item_name LIKE (?)', (data,))
         rows = c.fetchall()
         for row in rows:
-                print(row)
-                print(rows)
                 print('here')
                 results = rows
-                return render_template("inspectItem.html", itemName=data, title=title, form2=form2, results=results)
+                return render_template("inspectItem.html", itemName=data, title=title, imageRow=row[12], form2=form2, results=results)
                               
         if request.method == 'POST':
                 conn =sqlite3.connect('static/data.sqlite')
@@ -366,12 +364,13 @@ def editEntry(data):
                                         measurement4=(form.measurements4.data)
                                         print(measurement4)
                                         value4=(form.value4.data)
-                                        newEntry=[(item_name, model_number, item_Ref, item_category, measurement1, value1, measurement2, value2, measurement3, value3, measurement4, value4, data)]
+                                        imageName =(form.imageName.data)
+                                        newEntry=[(item_name, model_number, item_Ref, item_category, measurement1, value1, measurement2, value2, measurement3, value3, measurement4, value4, imageName, data)]
                                         print(newEntry)
                                         with conn:
                                                 try:
                                                                             
-                                                        c.executemany('''UPDATE items SET item_name=?, model_number=?, model_ref=?, item_category=?, measurement1=?, value1=?, measurement2=?, value2=?, measurement3=?, value3=?, measurement4=?, value4=? WHERE model_number =?;''', newEntry)
+                                                        c.executemany('''UPDATE items SET item_name=?, model_number=?, model_ref=?, item_category=?, measurement1=?, value1=?, measurement2=?, value2=?, measurement3=?, value3=?, measurement4=?, value4=?, ImageName=? WHERE model_number =?;''', newEntry)
                                                         message = "You have updated " + data + " in the database. "
                                                         flash(message)
                                                         return redirect(url_for('adminDash'))

@@ -7,10 +7,9 @@
 {% endfor %}
 <div class="container">
     <h1>{{ itemName }}</h1>
-{% for row in results %}
     <div class="row">
         <div class="col-sm-5">
-            <img class="productPageImages" src="{{url_for('static', filename='uploads/')}}{{row[12]}}.jpg">
+ <img class="productPageImages" src="{{url_for('static', filename='uploads/')}}{{imageRow}}.jpg">
         </div>
         <div class="col-sm-7">
             <p>
@@ -35,7 +34,8 @@
                       <th scope="col">Value</th>
                       <th scope="col">Second Measurement</th>
                       <th scope="col">Second Value</th>
-                    </tr>
+                    </tr>{% for row in results %}
+
                     <tr>
             <td>{{ row[1] }}</td>
             <td>{{ row[2] }}</td>
