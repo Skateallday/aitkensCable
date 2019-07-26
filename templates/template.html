@@ -16,32 +16,31 @@
 
 <body>
     <div id="header">
-        <div class="container-fluid">
+        <div class="container">
 
             <div class="row">
               <div class="col-sm-2"></div>
                 <div class="col-sm-2">
+                    
                   <img class="logo" alt="Aitken's logo, over 40 years in business" src={{url_for( 'static', filename='images/aitkensLogo.png' )}}>
                 </div>
                 <div class="col-sm-6">
                     <div class="row">
-                        <div class="col-sm-10">
-                            <form class="searchForm" method="POST" action='' enctype="multipart/form-data">
+                            <form class="searchForm" method="POST"  enctype="multipart/form-data">
+                                <div class="col-sm-10">
+
 
                                 {{ form2.hidden_tag() }} {{ form2.csrf_token() }}
-                                <p></p>
+                                
 
-                                <div class="active-cyan-3 active-cyan-4 mb-4">
                                     {% if request.method == 'POST' %} {% for error in form2.searchData.errors %}
                                     <span class="errors">[{{ error }}]</span> {% endfor %} {% endif %} {{ form2.searchData(class="form-control", placeholder="Search Product") }}
-                                </div>
                         </div>
-                        <div class="col-sm-2">
-                            <p></p>
-                            {{ form2.submit(class="btn btn-warning") }}
+                        <div class="col-sm-2">                            {{ form2.submit(class="form-control btn btn-warning") }}
                         </div>
-                        <i class="fas fa-search" aria-hidden="true"></i>
                         </form>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-12">
                             <h2 class="text-center">Glasgow &#8226; Manchester &#8226; Shefield</h2>
                             <p></p>
@@ -69,17 +68,18 @@
                               Products
                             </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-                            <a class="dropdown-item" href={{ url_for ( 'items', search="cable_Ladder" ) }}>Cable Ladder</a>
-                            <a class="dropdown-item" href={{ url_for ( 'items', search="cable_basket" ) }}>Cable Basket</a>
-                            <a class="dropdown-item" href={{ url_for ( 'items', search="cable_tray" ) }}>Cable Tray</a>
-                            <a class="dropdown-item" href={{ url_for ( 'items', search="cable_trunking" ) }}>Cable Trunking</a>
-                            <a class="dropdown-item" href={{ url_for ( 'items', search="channel_support" ) }}>Channel Support</a>
-                            <a class="dropdown-item" href={{ url_for ( 'items', search="Floor_Service_Box" ) }}>Floor Service Box</a>
-                            <a class="dropdown-item" href={{ url_for ( 'items', search="dado_trunking" ) }}>Dado Trunking</a>
-                            <a class="dropdown-item" href={{ url_for ( 'items', search="lighting_trunking" ) }}>Lighting Trunking</a>
-                            <a class="dropdown-item" href={{ url_for ( 'items', search="Plastic Conduit" ) }}>Plastic Conduit</a>
-                            <a class="dropdown-item" href={{ url_for ( 'items', search="roof_support_systems" ) }}>Roof Support Systems</a>
+                            <ul class="nav navbar-nav">
+                                    <li><a class="dropdown-item" href={{ url_for ( 'items', search="cable_Ladder" ) }}>Cable Ladder</a></li>
+                                    <li><a class="dropdown-item" href={{ url_for ( 'items', search="cable_basket" ) }}>Cable Basket</a></li>
+                                    <li><a class="dropdown-item" href={{ url_for ( 'items', search="cable_tray" ) }}>Cable Tray</a></li>
+                                    <li><a class="dropdown-item" href={{ url_for ( 'items', search="cable_trunking" ) }}>Cable Trunking</a></li>
+                                    <li><a class="dropdown-item" href={{ url_for ( 'items', search="channel_support" ) }}>Channel Support</a></li>
+                                    <li><a class="dropdown-item" href={{ url_for ( 'items', search="Floor_Service_Box" ) }}>Floor Service Box</a></li>
+                                    <li><a class="dropdown-item" href={{ url_for ( 'items', search="dado_trunking" ) }}>Dado Trunking</a></li>
+                                    <li><a class="dropdown-item" href={{ url_for ( 'items', search="lighting_trunking" ) }}>Lighting Trunking</a></li>
+                                    <li><a class="dropdown-item" href={{ url_for ( 'items', search="Plastic Conduit" ) }}>Plastic Conduit</a></li>
+                                    <li><a class="dropdown-item" href={{ url_for ( 'items', search="roof_support_systems" ) }}>Roof Support Systems</a></li>
+                    </ul>
                         </div>
                     </li>
                     <li class="active"><a href={{ url_for ( 'prefab') }}>Pre-fab and Special</a></li>

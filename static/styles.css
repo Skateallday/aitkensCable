@@ -16,7 +16,11 @@ h5{font-family: 'Gothic A1', sans-serif;
 }
 p{font-family: 'Gothic A1', sans-serif;
 }
-
+.navMenu{
+    background:#003e71;
+    color:#f2812c;
+    list-style: none;
+}
 .nav{
     color:#003e71;
     background:#f2812c;
