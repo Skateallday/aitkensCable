@@ -3,7 +3,6 @@ from flask_uploads import UploadSet, configure_uploads, IMAGES
 import os
 import hashlib
 from config import Config
-from flaskext.mysql import MySQL
 from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 from flask_login import LoginManager
@@ -23,8 +22,6 @@ app.config['SESSION_TYPE'] = 'filesystem'
 photos = UploadSet('photos')
 app.config['UPLOADED_PHOTOS_DEST']= 'static'
 configure_uploads(app, photos)
-mysql = MySQL()
-mysql.init_app(app)
 app.config.from_object(Config)
 csrf = CSRFProtect(app)
 table =""
@@ -187,7 +184,7 @@ def items(search):
                 conn = sqlite3.connect('static/data.sqlite')                
                 c = conn.cursor()
 
-                c.execute('SELECT DISTINCT item_name FROM items WHERE item_category LIKE (?)', (search,))
+                c.execute('SELECT DISTINCT item_name, ImageName FROM items WHERE item_category LIKE (?)', (search,))
                 rows = c.fetchall()
                 if rows:
 
@@ -464,14 +461,15 @@ def addEntry():
                         measurement4=(form.measurements4.data)
                         value4=(form.value4.data)
                         f = request.files.get('photo')
+                        imageName =(form.imageName.data)
                         print(f)
                         filename = secure_filename(f.filename)   
                         filetype = filename.split('.')
-                        uploadFile = item_name + ('.') + filetype[1]                    
+                        uploadFile = imageName + ('.') + filetype[1]                    
                         f.save(os.path.join
                                 (app.config['UPLOAD_FOLDER'], uploadFile
                         ))
-                        entry=[(item_name, model_number, item_Ref, item_category, measurement1, value1, measurement2, value2, measurement3, value3, measurement4, value4)]
+                        entry=[(item_name, model_number, item_Ref, item_category, measurement1, value1, measurement2, value2, measurement3, value3, measurement4, value4, imageName)]
                         print(entry)                             
                         print(table)
 
@@ -479,7 +477,7 @@ def addEntry():
                         with conn:
                                 c = conn.cursor()
                                 try:
-                                        insert_into = '''INSERT INTO items (item_name, model_number, model_ref, item_category,  measurement1, value1, measurement2, value2, measurement3, value3, measurement4, value4 ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)'''                      
+                                        insert_into = '''INSERT INTO items (item_name, model_number, model_ref, item_category,  measurement1, value1, measurement2, value2, measurement3, value3, measurement4, value4, imageName ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)'''                      
                                         c.executemany(insert_into, entry)
                                         message = "You have added " + item_name + " to the database."
                                         flash(message)

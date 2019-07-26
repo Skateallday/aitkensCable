@@ -96,11 +96,7 @@ class addModel(FlaskForm):
                                                          ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired(), Email()])
     value4 = StringField('value',  validators=[Length(min=2, max=30)])
     photo = FileField('Images Uploader',validators=[FileRequired()])
-
-
-
-
-
+    imageName = StringField('itemName', validators=[DataRequired(), Length(min=2, max=30)])
     submit = SubmitField('Add Entry')
 
 class searchData(FlaskForm):
@@ -150,7 +146,7 @@ class editModel(FlaskForm):
                                                         ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
                                                          ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired()])
     value4 = StringField('value', validators=[DataRequired(), Length(min=2, max=30)])
-
+    
     submit = SubmitField('Edit Entry')
 
 

@@ -117,6 +117,14 @@
 
        {{ form.photo(class="btn btn-warning") }}
 
+       <label for="imageName">Image Name</label>
+       {% if request.method == 'POST' %}
+       {% for error in form.imageName.errors %}
+       <span class="errors">[{{ error }}]</span>
+       {% endfor %}
+       {% endif %}
+       {{ form.imageName(class="form-control") }}
+
 
     {{ form.submit(class="btn btn-danger") }}
 
