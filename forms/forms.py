@@ -57,8 +57,8 @@ class addModel(FlaskForm):
     modelNumber = StringField('modelNumber', validators=[DataRequired(), Length(min=2, max=30)])
     modelRef = StringField('modelRef', validators=[DataRequired(), Length(min=2, max=30)])
 
-    itemCategory = SelectField('itemCategory',   choices=[ ('Cable Basket', 'Cable Basket'), ('Cable Ladder', 'Cable Ladder'),
-                                                         ('Cable Tray', 'Cable Tray'), ('Cable Trunking', 'Cable Trunking'),
+    itemCategory = SelectField('itemCategory',   choices=[ ('Cable Tray', 'Cable Tray'),('Cable Basket', 'Cable Basket'),
+                                                             ('Cable Ladder', 'Cable Ladder'), ('Cable Trunking', 'Cable Trunking'),
                                                          ('Channel Support', 'Channel Support'), ('Dado Trunking', 'Dado Trunking'),
                                                          ('Floor Service Box', 'Floor Service Box'), ('Lighting Trunking', 'Lighting Trunking'),
                                                          ('Plastic Conduit', 'Plastic Conduit'), ('Roof Support Systems', 'Roof Support Systems')], validators=[DataRequired()])
@@ -129,7 +129,7 @@ class editModel(FlaskForm):
                                                         ('Pack_Quantity', 'Pack Quantity'), 
                                                         ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
                                                          ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired()])
-    value2 = StringField('value', validators=[DataRequired(), Length(min=2, max=30)])
+    value2 = StringField('value', validators=[Length(min=2, max=30)])
     measurements3 = SelectField('Measurements', choices=[('None', 'None'),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
                                                         ('Diameter', 'Diameter'), ('Finish', 'Finish'),
                                                         ('Material', 'Material'), ('Size', 'Size'),

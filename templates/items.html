@@ -18,8 +18,9 @@
 
                     <table class="table table-striped table-dark">
                             <tr>
+                              <th scope="col"></th>
                               <th scope="col">Item Name</th>
-                              <th scope="col">Item Name</th>
+                              <th scope="col"></th>
                             </tr>{% for row in results %}
                             <tr>
                                 <td><img src="{{url_for('static', filename='uploads/')}}{{ row[1] }}.jpg"></td>
@@ -27,7 +28,7 @@
                     <td>{{ row[0] }}</td>
                     
                     
-                    <td><a href={{url_for('inspectItem', data=row[0])}} class="btn btn-primary">Click here to view product</button></td>
+                    <td><a href={{url_for('inspectItem', data=row[1])}} class="btn btn-primary">Click here to view product</button></td>
                     
                             </tr>{% endfor %}    
                                     

@@ -16,6 +16,8 @@ from flask_mail import Mail, Message
 
 
 app = Flask(__name__)
+application = app # our hosting requires application in passenger_wsgi
+
 bcrypt = Bcrypt(app)
 LoginManager = LoginManager(app)
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -226,12 +228,12 @@ def inspectItem(data):
         conn = sqlite3.connect('static/data.sqlite')                
         c = conn.cursor()
 
-        c.execute('SELECT * FROM items WHERE item_name LIKE (?)', (data,))
+        c.execute('SELECT * FROM items WHERE ImageName LIKE (?)', (data,))
         rows = c.fetchall()
         for row in rows:
                 print('here')
                 results = rows
-                return render_template("inspectItem.html", itemName=data, title=title, imageRow=row[12], form2=form2, results=results)
+                return render_template("inspectItem.html", itemName=row[0], title=title, imageRow=row[12], form2=form2, results=results)
                               
         if request.method == 'POST':
                 conn =sqlite3.connect('static/data.sqlite')
