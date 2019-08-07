@@ -49,7 +49,10 @@ def home():
                 return render_template('adminDash.html', username=g.username)
         else:
                 form2 = searchData(request.form)
-                if request.method == 'POST':
+                form3 = contactForm(request.form)
+                if form3.submit3.data:
+                        return redirect('sendMail')
+                if form2.searchData.data:
                         conn =sqlite3.connect('static/data.sqlite')
                         c = conn.cursor()
                         searchedData = form2.searchData.data
@@ -62,11 +65,11 @@ def home():
                                         print(row)
                                         print(rows)
                                         results = rows
-                                        return render_template('search.html',title=title, results=results, form2=form2)
+                                        return render_template('search.html',title=title, results=results, form3=form3, form2=form2)
                         else:
                                 error="Sorry there are no results"
-                                return render_template('search.html',title=title, error=error, form2=form2)
-                return render_template('index.html',title=title, form2=form2)
+                                return render_template('search.html',title=title, error=error, form3=form3,  form2=form2)
+                return render_template('index.html',title=title, form3=form3,  form2=form2)
 
 @app.route("/prefab", methods=['GET', 'POST'])
 def prefab():
@@ -75,6 +78,9 @@ def prefab():
                 return render_template('adminDash.html', username=g.username)
         else:
                 form2 = searchData(request.form)
+                form3 = contactForm(request.form)
+                if form3.submit3.data:
+                        return redirect('sendMail')
                 if request.method == 'POST':
                         conn =sqlite3.connect('static/data.sqlite')
                         c = conn.cursor()
@@ -88,11 +94,11 @@ def prefab():
                                         print(row)
                                         print(rows)
                                         results = rows
-                                        return render_template('search.html',title=title, results=results, form2=form2)
+                                        return render_template('search.html',title=title, results=results, form3=form3, form2=form2)
                         else:
                                 error="Sorry there are no results"
-                                return render_template('search.html',title=title, error=error, form2=form2)
-                return render_template('prefab.html',title=title, form2=form2)
+                                return render_template('search.html',title=title, error=error, form3=form3, form2=form2)
+                return render_template('prefab.html',title=title, form3=form3, form2=form2)
 
 @app.route("/stockist", methods=['GET', 'POST'])
 def stockist():
@@ -100,7 +106,11 @@ def stockist():
         if g.username:
                 return render_template('adminDash.html', username=g.username)
         else:
+                form = contactForm(request.form)
                 form2 = searchData(request.form)
+                form3 = contactForm(request.form)
+                if form3.submit3.data:
+                        return redirect('sendMail')
                 if request.method == 'POST':
                         conn =sqlite3.connect('static/data.sqlite')
                         c = conn.cursor()
@@ -114,11 +124,24 @@ def stockist():
                                         print(row)
                                         print(rows)
                                         results = rows
-                                        return render_template('search.html',title=title, results=results, form2=form2)
+                                        return render_template('search.html',title=title, results=results, form=form, form2=form2,form3=form3)
                         else:
                                 error="Sorry there are no results"
-                                return render_template('search.html',title=title, error=error, form2=form2)
-                return render_template('stockist.html',title=title, form2=form2)
+                                return render_template('search.html',title=title, error=error, form=form, form2=form2, form3=form3)
+                return render_template('stockist.html',title=title, form=form, form2=form2, form3=form3)
+
+@app.route("/lightingTrunking", methods=['GET', 'POST'])
+def lightingTrunking():
+        title="Lighting Trunking Systems at Aitken's Electrical"
+        if g.username:
+                return render_template('adminDash.html', username=g.username)
+        else:
+                form2 = searchData(request.form)   
+                form3 = contactForm(request.form)
+                if form3.submit3.data:
+                        return redirect('sendMail')             
+                return render_template('lightingTrunking.html', title=title, form2=form2, form3=form3)
+        
 
 
 @app.route("/contact", methods=['GET', 'POST'])
@@ -127,8 +150,10 @@ def contact():
         if g.username:
                 return render_template('adminDash.html', username=g.username)
         else:
-                form = contactForm(request.form)
                 form2 = searchData(request.form)
+                form3 = contactForm(request.form)
+                if form3.submit3.data:
+                        return redirect('sendMail')
                 if request.method == 'POST':
                         conn =sqlite3.connect('static/data.sqlite')
                         c = conn.cursor()
@@ -142,15 +167,18 @@ def contact():
                                         print(row)
                                         print(rows)
                                         results = rows
-                                        return render_template('search.html',title=title, results=results, form=form, form2=form2)
+                                        return render_template('search.html',title=title, results=results, form2=form2, form3=form3)
                         else:
                                 error="Sorry there are no results"
-                                return render_template('search.html',title=title, error=error, form=form, form2=form2)
-                return render_template('contact.html',title=title, form=form, form2=form2)
+                                return render_template('search.html',title=title, error=error, form2=form2, form3=form3)
+                return render_template('contact.html',title=title, form2=form2, form3=form3)
 
 @app.route("/search/", methods=['GET', 'POST'])
 def search():
         form2 = searchData(request.form)
+        form3 = contactForm(request.form)
+        if form3.submit3.data:
+                return redirect('sendMail')
         title="Aitken's Electrical Search Results"
         if request.method == 'POST':
                 conn =sqlite3.connect('static/data.sqlite')
@@ -165,13 +193,13 @@ def search():
                                 print(row)
                                 print(rows)
                                 results = rows
-                                return render_template('search.html', title=title, results=results, form2=form2)
+                                return render_template('search.html', title=title, results=results, form2=form2, form3=form3)
                 else:
                         error="Sorry there are no results"
-                        return render_template('search.html', title=title, error=error, form2=form2)
+                        return render_template('search.html', title=title, error=error, form2=form2, form3=form3)
         else:
                 error="Sorry there are no results"
-                return render_template('search.html',title=title, error=error, form2=form2)
+                return render_template('search.html',title=title, error=error, form2=form2, form3=form3)
         return redirect('home')
 
 
@@ -181,6 +209,9 @@ def items(search):
         title="Aitken's Electrical Item Results"
         form = viewItems(request.form)
         form2 = searchData(request.form)   
+        form3 = contactForm(request.form)
+        if form3.submit3.data:
+                return redirect('sendMail')
         
         if request.method == 'GET':
                 conn = sqlite3.connect('static/data.sqlite')                
@@ -194,10 +225,10 @@ def items(search):
                                 print(row)
                                 print(rows)
                                 results = rows
-                                return render_template('items.html', title=title, results=results, form2=form2, form=form)
+                                return render_template('items.html', title=title, results=results, form2=form2, form3=form3, form=form)
                 else:
                         flash("There has been an error, please try again")
-                        return render_template('items.html', title=title, form2=form2, form=form)
+                        return render_template('items.html', title=title, form2=form2,form3=form3, form=form)
                                 
         if request.method == 'POST':
                 conn =sqlite3.connect('static/data.sqlite')
@@ -212,18 +243,20 @@ def items(search):
                                 print(row)
                                 print(rows)
                                 results = rows
-                                return render_template('search.html', title=title, results=results, form2=form2)
+                                return render_template('search.html', title=title, results=results, form3=form3, form2=form2)
                 else:
                         error="Sorry there are no results"
-                        return render_template('search.html',title=title, error=error, form2=form2)     
+                        return render_template('search.html',title=title, error=error, form3=form3, form2=form2)     
         else:
                 flash("There has been an error, please try again")
-                return render_template('items.html',form2=form2, title=title, form=form)
+                return render_template('items.html',form2=form2, title=title, form3=form3, form=form)
 
 @app.route("/inspectItem/<data>", methods=['GET', 'POST'])
 def inspectItem(data):
         form2 = searchData(request.form)
-        print(data)
+        form3 = contactForm(request.form)
+        if form3.submit3.data:
+                return redirect('sendMail')
         title="Aitken's Electrical Item Information"
         conn = sqlite3.connect('static/data.sqlite')                
         c = conn.cursor()
@@ -233,7 +266,7 @@ def inspectItem(data):
         for row in rows:
                 print('here')
                 results = rows
-                return render_template("inspectItem.html", itemName=row[0], title=title, imageRow=row[12], form2=form2, results=results)
+                return render_template("inspectItem.html", itemName=row[0], title=title, imageRow=row[12], form2=form2,form3=form3, results=results)
                               
         if request.method == 'POST':
                 conn =sqlite3.connect('static/data.sqlite')
@@ -248,11 +281,11 @@ def inspectItem(data):
                                 print(row)
                                 print(rows)
                                 results = rows
-                                return render_template('search.html', results=results, title=title, form2=form2)
+                                return render_template('search.html', results=results, title=title,form3=form3, form2=form2)
                 else:
                         error="Sorry there are no results"
-                        return render_template('search.html', error=error,title=title, form2=form2)     
-        return render_template("inspectItem.html", itemName=data, title=title, form2=form2)
+                        return render_template('search.html', error=error,title=title, form3=form3, form2=form2)     
+        return render_template("inspectItem.html", itemName=data, title=title, form3=form3, form2=form2)
 
 
 @app.route('/register/', methods=["GET","POST"])

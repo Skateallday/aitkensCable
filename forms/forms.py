@@ -17,7 +17,16 @@ class contactForm(FlaskForm):
     fullname = StringField('fullname', validators=[DataRequired(), Length(min=2, max=30)])
     company = StringField('company', validators=[DataRequired(), Length(min=2, max=30)])
     email = StringField('email', validators=[DataRequired(), Email])
-    companyAddress = TextField('message', widget=TextArea(), validators=[DataRequired(),  Length(min=10, max=500)])
+    companyAddress = TextField('companyAddress', widget=TextArea(), validators=[DataRequired(),  Length(min=10, max=500)])
+    contactNumber = StringField('contactNumber', validators=[DataRequired(), Length(min=2, max=12)])
+    message = TextField('message', widget=TextArea(), validators=[DataRequired(),  Length(min=10, max=500)])
+    submit3 = SubmitField('Send')
+
+class stockistForm(FlaskForm):
+    fullname = StringField('fullname', validators=[DataRequired(), Length(min=2, max=30)])
+    company = StringField('company', validators=[DataRequired(), Length(min=2, max=30)])
+    email = StringField('email', validators=[DataRequired(), Email])
+    companyAddress = TextField('companyAddress', widget=TextArea(), validators=[DataRequired(),  Length(min=10, max=500)])
     contactNumber = StringField('contactNumber', validators=[DataRequired(), Length(min=2, max=12)])
     message = TextField('message', widget=TextArea(), validators=[DataRequired(),  Length(min=10, max=500)])
     submit = SubmitField('Send')
@@ -101,7 +110,7 @@ class addModel(FlaskForm):
 
 class searchData(FlaskForm):
     searchData = StringField('searchData', validators=[DataRequired(), Length(min=4, max=30)])
-    submit = SubmitField('Search!')
+    submit2 = SubmitField('Search!')
 
 
 class editModel(FlaskForm):

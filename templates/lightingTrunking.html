@@ -1,0 +1,17 @@
+{% extends "template.html" %} {% block content %} {% for message in get_flashed_messages() %}
+<div class="alert alert-warning">
+    <button type="button" class="close" data-dismiss="alert">
+            &times;
+          </button> {{ message }}
+</div>
+{% endfor %}
+<h1>Lighting Trunking Systems</h1>
+<div class="col-sm-6">
+<h2>General Introduction</h2>
+<p>Aitkens System 55, Lighting Trunking, has been developed to accommodate the lastest market requirements, whilst providing a high quality, easily installed and reliable product. System 55 is provided in a nomial 50mm square format, with a 4m body length to minimise installation time and cost, and to ensure performance characteristics are maintained.</p>
+<p>System 55 is offered with a comprehensive range of fittings and accessories, each supplied with the approprate number of fixing screws, adopting the conventional slide assembly pressure screw coupling format, to eliminate the need for site drilling at junction points. All fittings are provided with pre-tapped fixings, rolled thread type, both to ensure that sharp edges are minimised and that a reliable tthread is ensured.</p>
+<h2>General Specification</h2>
+<p>The System 55 body length is produced as a roll-formed section from pre-coated galvanised steel which is procured to comply with the requirements of BS EN 10327 : 2004, with a zinc coating weight of 275 g/m2(Z275), providing a norminal coating thickness of 15µm (microns) or 0.015mm.</p>
+<p>The roll-formed section also features a combined safe edge and reinforcing return flange which helps achieve high linear rigidity, throughout the system.</p>
+</div>
+{% endblock %}
