@@ -26,41 +26,8 @@ h5{font-family: 'Gothic A1', sans-serif;
 }
 p{font-family: 'Gothic A1', sans-serif;
 }
-.navMenu{
-    list-style: none;
-}
 .nav{   
     background:#f2812c;    
-}
-
-
-.nav a{
-    color:#fff;  
-    -webkit-transition: all 0.8s ease-in;
-    -moz-transition: all 0.8s ease-in;
-    transition: all 0.8s ease-in;      
-}
-
-.nav a:hover{
-    color:#003e71;
-    -webkit-transition: all 0.8s ease-in;
-    -moz-transition: all 0.8s ease-in;
-    transition: all 0.8s ease-in;
-}
-
-
-.nav a:active{
-    color:#003e71;
-}
-
-
-
-.blueWhite{
-    color:#fff;
-    background:#003e71;   
-    line-height: 30px;
-    transition: all .5s ease-in;
-    
 }
 
 
