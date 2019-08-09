@@ -150,7 +150,7 @@ def CableTray():
         if form3.submit3.data:
                 return redirect('sendMail')
         return render_template('CableTray.html', title=title, form2=form2, form3=form3)
-        
+
 @app.route("/contact", methods=['GET', 'POST'])
 def contact():
         title="Contact Page for Aitken's Electrical"
@@ -227,7 +227,6 @@ def items(search):
                 c.execute('SELECT DISTINCT item_name, ImageName FROM items WHERE item_category LIKE (?)', (search,))
                 rows = c.fetchall()
                 if rows:
-
                         for row in rows:
                                 print(row)
                                 print(rows)
@@ -241,7 +240,7 @@ def items(search):
                 conn =sqlite3.connect('static/data.sqlite')
                 c = conn.cursor()
                 searchedData = form2.searchData.data
-                search=('''SELECT DISTINCT item_name FROM items WHERE item_name LIKE ?''')
+                search=('''SELECT DISTINCT item_name, ImageName FROM items WHERE item_name LIKE ?''')
                 c.execute(search, ['%'+searchedData+'%'])
                 rows = c.fetchall()
                 if rows:
@@ -250,10 +249,10 @@ def items(search):
                                 print(row)
                                 print(rows)
                                 results = rows
-                                return render_template('search.html', title=title, results=results, form3=form3, form2=form2)
+                                return render_template('search.html', title=title, results=results, form3=form3, form2=form2, form=form)
                 else:
                         error="Sorry there are no results"
-                        return render_template('search.html',title=title, error=error, form3=form3, form2=form2)     
+                        return render_template('search.html',title=title, error=error, form3=form3, form2=form2, form=form)     
         else:
                 flash("There has been an error, please try again")
                 return render_template('items.html',form2=form2, title=title, form3=form3, form=form)
@@ -273,7 +272,19 @@ def inspectItem(data):
         for row in rows:
                 print('here')
                 results = rows
-                return render_template("inspectItem.html", itemName=row[0], title=title, imageRow=row[12], form2=form2,form3=form3, results=results)
+                display = "Block"
+                measurement= (row[3], row[5], row[7], row[9])
+                print (measurement)
+                if measurement [1] == "None" or measurement[1] == "":
+                        display = "none"
+                        print (display)
+                if measurement [2] == "None"  or measurement[2] == "":
+                        display2 = "none"
+                        print (display2)
+                if measurement [3] == "None"  or measurement[3] == "":
+                        display3 = "none"
+                        print (display3)
+                        return render_template("inspectItem.html", display=display, display2=display2, display3=display3, itemName=row[0], itemRef=row[1], measurement=measurement, title=title, imageRow=row[12], form2=form2,form3=form3, results=results)
                               
         if request.method == 'POST':
                 conn =sqlite3.connect('static/data.sqlite')

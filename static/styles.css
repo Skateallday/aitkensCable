@@ -74,3 +74,13 @@ p{
     background:#003e71;
     color:#fff;
 }
+
+.listImgs{
+    width:100px;
+    height:100px;
+}
+
+
+td:empty{
+    display: none;
+  }

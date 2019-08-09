@@ -30,19 +30,19 @@
                     <tr class="orange">
                       <th scope="col">Model Number</th>
                       <th scope="col">Model Reference</th>
-                      <th scope="col">Measurement</th>
-                      <th scope="col">Value</th>
-                      <th scope="col">Second Measurement</th>
-                      <th scope="col">Second Value</th>
+                      <th scope="col">{{measurement[0]}}</th>
+                      <th style="display: {{display}};" scope="col">{{measurement[1]}}</th>
+                      <th style="display: {{display}};" scope="col">{{measurement[2]}}</th>
+                      <th style="display: {{display}};" scope="col">{{measurement[3]}}</th>
                     </tr>{% for row in results %}
 
                     <tr>
             <td>{{ row[1] }}</td>
             <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
             <td>{{ row[4] }}</td>
-            <td>{{ row[5] }}</td>
-            <td>{{ row[6] }}</td>
+            <td >{{ row[6] }}</td>
+            <td >{{ row[8] }}</td>
+            <td >{{ row[10] }}</td>
             
             
             

@@ -23,14 +23,14 @@
                               <th scope="col"></th>
                             </tr>{% for row in results %}
                             <tr>
-                                <td><img src="{{url_for('static', filename='uploads/')}}{{ row[1] }}.jpg"></td>
+                                <td><img class="listImgs" src="{{url_for('static', filename='uploads/')}}{{ row[1] }}.jpg"></td>
 
                     <td>{{ row[0] }}</td>
                     
                     
-                    <td><a href={{url_for('inspectItem', data=row[1])}} class="btn btn-primary">Click here to view product</button></td>
-                    
-                            </tr>{% endfor %}    
+                    <td><a href={{url_for('inspectItem', data=row[1])}} class="btn btn-warning">Click here to view product</button></td>
+                      
+                    </tr>{% endfor %}    
                                     
                                                   
                                     
