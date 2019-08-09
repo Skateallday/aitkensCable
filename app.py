@@ -142,8 +142,15 @@ def lightingTrunking():
                         return redirect('sendMail')             
                 return render_template('lightingTrunking.html', title=title, form2=form2, form3=form3)
         
-
-
+@app.route("/CableTray")
+def CableTray():
+        title="Cable Tray at Aitken's Electrical"
+        form2= searchData(request.form)
+        form3= contactForm(request.form)
+        if form3.submit3.data:
+                return redirect('sendMail')
+        return render_template('CableTray.html', title=title, form2=form2, form3=form3)
+        
 @app.route("/contact", methods=['GET', 'POST'])
 def contact():
         title="Contact Page for Aitken's Electrical"

@@ -1,5 +1,5 @@
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, IntegerField, \
-    FileField, TextField, validators
+    FileField, TextField, validators, RadioField
 from wtforms.widgets import TextArea
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Regexp
@@ -17,8 +17,7 @@ class contactForm(FlaskForm):
     fullname = StringField('fullname', validators=[DataRequired(), Length(min=2, max=30)])
     company = StringField('company', validators=[DataRequired(), Length(min=2, max=30)])
     email = StringField('email', validators=[DataRequired(), Email])
-    companyAddress = TextField('companyAddress', widget=TextArea(), validators=[DataRequired(),  Length(min=10, max=500)])
-    contactNumber = StringField('contactNumber', validators=[DataRequired(), Length(min=2, max=12)])
+    locationContact = RadioField('locationContact', choices=[('Glasgow', 'Glasgow'), ('Manchester', 'Manchester'), ('Leeds', 'Leeds')], default="Glasgow", validators=[DataRequired(),])
     message = TextField('message', widget=TextArea(), validators=[DataRequired(),  Length(min=10, max=500)])
     submit3 = SubmitField('Send')
 

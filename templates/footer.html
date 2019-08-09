@@ -1,38 +1,55 @@
-<h4>
-        Send us a Message!</h4>
-    <p>If you have any enquries fill out the form below and we will get a reply out to you as soon as possible</p>
-    
-    <form class="contact" method="POST" enctype="multipart/form-data">
-    <div class="row">
-            <div class="col-sm-12">
-        {{ form3.hidden_tag() }} {{ form3.csrf_token() }} {% if request.method == 'POST' %}
-        {% for error in form3.fullname.errors %}
-    
-                <span class="errors">[{{ error }}]</span> {% endfor %} {% endif %}
-                 {{ form3.fullname(class="form-control", placeholder="Full Name") }}
-                  {% if request.method == 'POST' %}
-                </div>
+
+
+<form class="contact" method="POST" enctype="multipart/form-data">
+
+    <div class="container">
+
+        <div class="row">
+<h4>Contact Us</h4>
+            {{ form3.hidden_tag() }} {{ form3.csrf_token() }}
+            <div class="col-sm-4">
+                <label class="form-labels" for="full name">Full Name</label>
+                {{ form3.fullname(class="form-control") }}
+            </div>
 
             <div class="col-sm-4">
-                {% for error in form3.company.errors %}
-    
-                <span class="errors">[{{ error }}]</span> {% endfor %} {% endif %} 
-                {{ form3.company(class="form-control", placeholder="Company Name") }} 
-                {% if request.method == 'POST' %} 
+                    <label for="Company name">Company Name</label>
+
+                {{ form3.company(class="form-control") }}
             </div>
 
-            <div class="col-sm-4"> {% for error in form3.email.errors %}
-    
-                <span class="errors">[{{ error }}]</span> {% endfor %} {% endif %} 
-                {{ form3.email(class="form-control", placeholder="Email Address") }} 
-                {% if request.method == 'POST' %} {% for error in form3.companyAddress.errors %}
-    
+            <div class="col-sm-4">
+                    <label for="Email Address">Email Address</label>
+
+                {{ form3.email(class="form-control") }}
+
             </div>
         </div>
-        <span class="errors">[{{ error }}]</span> {% endfor %} {% endif %} {{ form3.companyAddress(class="form-control", placeholder="Company Address") }} {% if request.method == 'POST' %} {% for error in form3.contactNumber.errors %}
-        <span class="errors">[{{ error }}]</span> {% endfor %} {% endif %} {{ form3.contactNumber(class="form-control", placeholder="Contact Number") }} {% if request.method == 'POST' %} {% for error in form3.message.errors %}
-        <span class="errors">[{{ error }}]</span> {% endfor %} {% endif %} {{ form3.message(class="form-control", placeholder="Type your message here....") }} {{ form3.submit3(class="form-control") }}
-    
-    </form>
-</div></div><hr>
-    <a href={{url_for( 'login')}}>Log in</a> &copy; Copyright 2019 by <a href="http://www.thedesigndepartment.co.uk/">The Design Department</a>.
+        <div class="row">
+            <div class="col-sm-12">
+                    <label for="locationContact">Which Branch would you like to contact?</label>
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                {% for subfield in form3.locationContact%}
+               <div class="col-sm-4">
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td></div>
+                </tr>
+            {% endfor %}
+        </div></div>
+        <div class="row">
+                
+
+            <div class="col-sm-12"> 
+                <label for="message">Type your message below</label>{{ form3.message(class="form-control") }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1">{{ form3.submit3(class="btn btn-danger") }}</div></div>
+
+            <hr>
+            <a href={{url_for( 'login')}}>Log in</a> &copy; Copyright 2019 by <a href="http://www.thedesigndepartment.co.uk/">The Design Department</a>.</div>
+</form>
