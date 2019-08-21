@@ -117,42 +117,52 @@ class editModel(FlaskForm):
     modelNumber = StringField('modelNumber', validators=[DataRequired(), Length(min=2, max=30)])
     modelRef = StringField('modelRef', validators=[DataRequired(), Length(min=2, max=30)])
 
-    itemCategory = SelectField('itemCategory',   choices=[('cable_trunking', 'Cable Trunking'),('cable_basket', 'Cable Basket'), ('cable_Ladder', 'Cable Ladder'),
-                                                         ('cable_tray', 'Cable Tray'), 
-                                                         ('channel_support', 'Channel Support'), ('dado_trunking', 'Dado Trunking'),
-                                                         ('Floor_Service_Box', 'Floor Service Box'), ('lighting_trunking', 'Lighting Trunking'),
-                                                         ('plastic_conduit', 'Plastic Conduit'), ('roof_support_systems', 'Roof Support Systems')], validators=[DataRequired()])
-    measurements = SelectField('Measurements', choices=[('Size', 'Size'), ('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
+    
+    itemCategory = SelectField('itemCategory',   choices=[ ('Cable Tray', 'Cable Tray'),('Cable Basket', 'Cable Basket'),
+                                                             ('Cable Ladder', 'Cable Ladder'), ('Cable Trunking', 'Cable Trunking'),
+                                                         ('Channel Support', 'Channel Support'), ('Dado Trunking', 'Dado Trunking'),
+                                                         ('Floor Service Box', 'Floor Service Box'), ('Lighting Trunking', 'Lighting Trunking'),
+                                                         ('Plastic Conduit', 'Plastic Conduit'), ('Roof Support Systems', 'Roof Support Systems')], validators=[DataRequired()])
+
+    measurements = SelectField('Measurements', choices=[('', ''),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
                                                         ('Diameter', 'Diameter'), ('Finish', 'Finish'),
-                                                        ('Material', 'Material'), 
+                                                        ('Material', 'Material'), ('Size', 'Size'),
                                                         ('Thickeness', 'Thickness'), ('Thread', 'Thread'),
                                                         ('Pack_Quantity', 'Pack Quantity'), 
                                                         ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
                                                          ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired()])
     value = StringField('value', validators=[DataRequired(), Length(min=2, max=30)])
-    measurements2 = SelectField('Measurements', choices=[('Size', 'Size'),('None', 'None'),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
-                                                        ('Diameter', 'Diameter'), ('Finish', 'Finish'),
-                                                        ('Material', 'Material'), 
-                                                        ('Thickeness', 'Thickness'), ('Thread', 'Thread'),
-                                                        ('Pack_Quantity', 'Pack Quantity'), 
-                                                        ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
-                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired()])
-    value2 = StringField('value', validators=[Length(min=2, max=30)])
-    measurements3 = SelectField('Measurements', choices=[('None', 'None'),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
+    measurements2 = SelectField('Measurements', choices=[('', ''),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
                                                         ('Diameter', 'Diameter'), ('Finish', 'Finish'),
                                                         ('Material', 'Material'), ('Size', 'Size'),
                                                         ('Thickeness', 'Thickness'), ('Thread', 'Thread'),
                                                         ('Pack_Quantity', 'Pack Quantity'), 
                                                         ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
-                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired()])
+                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[ Email()])
+    value2 = StringField('value', validators=[ Length(min=2, max=30)])
+    measurements3 = SelectField('Measurements', choices=[('', ''),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
+                                                        ('Diameter', 'Diameter'), ('Finish', 'Finish'),
+                                                        ('Material', 'Material'), ('Size', 'Size'),
+                                                        ('Thickeness', 'Thickness'), ('Thread', 'Thread'),
+                                                        ('Pack_Quantity', 'Pack Quantity'), 
+                                                        ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
+                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[])
+    value3 = StringField('value', validators=[Length(min=2, max=30)])
+    measurements4 = SelectField('Measurements', choices=[('', ''),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
+                                                        ('Diameter', 'Diameter'), ('Finish', 'Finish'),
+                                                        ('Material', 'Material'), ('Size', 'Size'),
+                                                        ('Thickeness', 'Thickness'), ('Thread', 'Thread'),
+                                                        ('Pack_Quantity', 'Pack Quantity'), 
+                                                        ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
+                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[])
     value3 = StringField('value', validators=[ Length(min=2, max=30)])
-    measurements4 = SelectField('Measurements', choices=[('None', 'None'),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
+    measurements4 = SelectField('Measurements', choices=[('', ''),('Width', 'Width'), ('Height', 'Height'), ('Length', 'Length'),
                                                         ('Diameter', 'Diameter'), ('Finish', 'Finish'),
                                                         ('Material', 'Material'), ('Size', 'Size'),
                                                         ('Thickeness', 'Thickness'), ('Thread', 'Thread'),
                                                         ('Pack_Quantity', 'Pack Quantity'), 
                                                         ('Box_Quantity', 'Box Quantity'), ('AFXWeight', 'AFX Weight'),
-                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')], validators=[DataRequired()])
+                                                         ('Load_Bearing', 'Load Bearing'), ('Height_With_Foot', 'Height With Foot'), ('Max.Loading', 'Max Loading')])
     value4 = StringField('value', validators=[ Length(min=2, max=30)])
     imageName = StringField('itemName', validators=[DataRequired(), Length(min=2, max=30)])
 

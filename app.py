@@ -8,7 +8,7 @@ from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect, CSRFError
 from flask_wtf.file import FileField, FileRequired
-from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm, viewItems, editModel, searchData, addCategory, contactForm
+from forms.forms import registration, loginForm, addModel, forgotPassword, PasswordForm, viewItems, editModel, searchData, addCategory, contactForm, stockistForm
 import sqlite3
 import ctypes  
 from itsdangerous import URLSafeTimedSerializer
@@ -106,9 +106,9 @@ def stockist():
         if g.username:
                 return render_template('adminDash.html', username=g.username)
         else:
-                form = contactForm(request.form)
-                form2 = searchData(request.form)
                 form3 = contactForm(request.form)
+                form2 = searchData(request.form)
+                form = stockistForm(request.form)
                 if form3.submit3.data:
                         return redirect('sendMail')
                 if request.method == 'POST':
@@ -142,7 +142,7 @@ def lightingTrunking():
                         return redirect('sendMail')             
                 return render_template('lightingTrunking.html', title=title, form2=form2, form3=form3)
         
-@app.route("/CableTray")
+@app.route("/CableTray", methods=['GET', 'POST'])
 def CableTray():
         title="Cable Tray at Aitken's Electrical"
         form2= searchData(request.form)
@@ -224,14 +224,13 @@ def items(search):
                 conn = sqlite3.connect('static/data.sqlite')                
                 c = conn.cursor()
 
-                c.execute('SELECT DISTINCT item_name, ImageName FROM items WHERE item_category LIKE (?)', (search,))
+                c.execute('SELECT DISTINCT item_name, ImageName, item_category  FROM items WHERE item_category LIKE (?)', (search,))
                 rows = c.fetchall()
                 if rows:
                         for row in rows:
-                                print(row)
                                 print(rows)
                                 results = rows
-                                return render_template('items.html', title=title, results=results, form2=form2, form3=form3, form=form)
+                                return render_template('items.html', title=title, heading=row[2], results=results, form2=form2, form3=form3, form=form)
                 else:
                         flash("There has been an error, please try again")
                         return render_template('items.html', title=title, form2=form2,form3=form3, form=form)
@@ -284,7 +283,7 @@ def inspectItem(data):
                 if measurement [3] == "None"  or measurement[3] == "":
                         display3 = "none"
                         print (display3)
-                        return render_template("inspectItem.html", display=display, display2=display2, display3=display3, itemName=row[0], itemRef=row[1], measurement=measurement, title=title, imageRow=row[12], form2=form2,form3=form3, results=results)
+                        return render_template("inspectItem.html", display=display, display2=display2, display3=display3, itemName=row[0],modRef=row[2], itemRef=row[1], measurement=measurement, title=title, imageRow=row[12], form2=form2,form3=form3, results=results)
                               
         if request.method == 'POST':
                 conn =sqlite3.connect('static/data.sqlite')

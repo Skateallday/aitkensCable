@@ -80,7 +80,13 @@ p{
     height:100px;
 }
 
+.orange{
+    color:#f2812c;
+}
 
+.white{
+    color:#fff;
+}
 td:empty{
     display: none;
   }\/0.

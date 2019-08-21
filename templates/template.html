@@ -30,12 +30,11 @@
                     <div class="row">
                         <form class="searchForm" method="POST" enctype="multipart/form-data">
                             <div class="col-sm-10">
-                                <label for="searchData">Search Product</label>
                                 {{ form2.hidden_tag() }} {{ form2.csrf_token() }} {% if request.method == 'POST' %} {% for error in form2.searchData.errors %}
                                 <span class="errors">[{{ error }}]</span> {% endfor %} {% endif %} {{ form2.searchData(class="form-control", placeholder="Search Product") }}
                             
-                                <h2 class="text-center">Glasgow &#8226; Leeds &#8226; Manchester</h2>
-                                <h4 class="text-center">0141 647 3111 &#8226; 0113 225 1111 &#8226; 0161 872 6214</h4>
+                                <h2 class="text-center"><span class="white">Glasgow</span>&#8226;<span class="white">Leeds</span> &#8226; <span class="white">Manchester</span></h2>
+                                <h4 class="text-center"><span class="white">0141 647 3111</span>&#8226;<span class="white"> 0113 225 1111</span> &#8226; <span class="white"> 0161 872 6214</span> </h4>
                               </div>
                             <div class="col-sm-2"> 
                             </div>
@@ -45,7 +44,8 @@
                 </div>
             </div>
         </div>
-        
+        <nav class="navbar nav">
+        <div class="container">
           <div class="navigation text-center">
               <ul>
                   <li class="active"><a href={{ url_for ( 'home') }}>Home</a></li>
@@ -73,13 +73,13 @@
 
                       </ul>
                   </li>
-                  <li class="active"><a href={{ url_for ( 'prefab') }}>Pre-fab and Specials</a></li>
+                  <li class="active"><a href={{ url_for ( 'prefab') }}>Pre-Fab and Specials</a></li>
                     <li class="active"><a href={{ url_for ( 'stockist') }}>Become a Stockist</a></li>
                     <li class="active"><a href={{ url_for ( 'contact') }}>Contact Us</a></li>
               </ul>
-  </div>
-  <nav class="navbar nav">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+  </div></div>
+  
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
             <!-- Indicators -->
             <ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
