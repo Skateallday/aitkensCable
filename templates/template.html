@@ -44,39 +44,49 @@
                 </div>
             </div>
         </div>
-        <nav class="navbar nav">
-        <div class="container">
-          <div class="navigation text-center">
-              <ul>
-                  <li class="active"><a href={{ url_for ( 'home') }}>Home</a></li>
-
-                  <li><a href="#">Products</a>
-                      <ul>
-                          <li><a class="dropdown-item" href={{ url_for ( 'items', search="cable_trunking" ) }}>Cable Trunking</a></li>
-                                <li><a class="dropdown-item" href={{ url_for ( 'lightingTrunking' ) }}>Lighting Trunking</a></li>
-                                <li><a class="dropdown-item" href={{ url_for ( 'CableTray' ) }}>Cable Tray</a></li>
-                            
-
-                                <li><a class="dropdown-item" href={{ url_for ( 'items', search="channel_support" ) }}>Channel Support</a></li>
-                                <li><a class="dropdown-item" href={{ url_for ( 'items', search="galvanised_conduit" ) }}>Galvanised Conduit/Accessories</a></li>
-                                <li><a class="dropdown-item" href={{ url_for ( 'items', search="plastic_conduit" ) }}>Plastic Conduit & Accessories</a></li>
-                            
-
-                                <li><a class="dropdown-item" href={{ url_for ( 'items', search="dado_trunking" ) }}>Dado Trunking & Accessories</a></li>
-                                <li><a class="dropdown-item" href={{ url_for ( 'items', search="cable_ladder" ) }}>Cable Ladder & Accessories</a></li>
-                                <li><a class="dropdown-item" href={{ url_for ( 'items', search="cable_basket" ) }}>Cable Basket & Accessories</a></li>
-                            
-
-                                <li><a class="dropdown-item" href={{ url_for ( 'items', search="floor_trunking_systems" ) }}>Floor Trunking Systems</a></li>
-                                <li><a class="dropdown-item" href={{ url_for ( 'items', search="roof_support_systems" ) }}>Roof Support Systems</a></li>
-                                <li><a class="dropdown-item" href={{ url_for ( 'items', search="consumables" ) }}>Consumables</a></li>
-
-                      </ul>
-                  </li>
-                  <li class="active"><a href={{ url_for ( 'prefab') }}>Pre-Fab and Specials</a></li>
-                    <li class="active"><a href={{ url_for ( 'stockist') }}>Become a Stockist</a></li>
-                    <li class="active"><a href={{ url_for ( 'contact') }}>Contact Us</a></li>
-              </ul>
+        <nav class="navbar nav" role="navigation">
+                <div class="container">
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse">
+                                  <span class="sr-only">Toggle navigation</span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                              </button>
+                  </div>
+                  <div class="collapse navbar-collapse  navigation text-center" id="collapse">
+                        <ul class="nav navbar-nav">
+                                <li class="active"><a href={{ url_for ( 'home') }}>Home</a></li>
+              
+                                <li><a href="#">Products</a>
+                                    <ul>
+                                        <li><a class="dropdown-item" href={{ url_for ( 'items', search="cable_trunking" ) }}>Cable Trunking</a></li>
+                                              <li><a class="dropdown-item" href={{ url_for ( 'lightingTrunking' ) }}>Lighting Trunking</a></li>
+                                              <li><a class="dropdown-item" href={{ url_for ( 'CableTray' ) }}>Cable Tray</a></li>
+                                          
+              
+                                              <li><a class="dropdown-item" href={{ url_for ( 'items', search="channel_support" ) }}>Channel Support</a></li>
+                                              <li><a class="dropdown-item" href={{ url_for ( 'items', search="galvanised_conduit" ) }}>Galvanised Conduit/Accessories</a></li>
+                                              <li><a class="dropdown-item" href={{ url_for ( 'items', search="plastic_conduit" ) }}>Plastic Conduit & Accessories</a></li>
+                                          
+              
+                                              <li><a class="dropdown-item" href={{ url_for ( 'items', search="dado_trunking" ) }}>Dado Trunking & Accessories</a></li>
+                                              <li><a class="dropdown-item" href={{ url_for ( 'items', search="cable_ladder" ) }}>Cable Ladder & Accessories</a></li>
+                                              <li><a class="dropdown-item" href={{ url_for ( 'items', search="cable_basket" ) }}>Cable Basket & Accessories</a></li>
+                                          
+              
+                                              <li><a class="dropdown-item" href={{ url_for ( 'items', search="floor_trunking_systems" ) }}>Floor Trunking Systems</a></li>
+                                              <li><a class="dropdown-item" href={{ url_for ( 'items', search="roof_support_systems" ) }}>Roof Support Systems</a></li>
+                                              <li><a class="dropdown-item" href={{ url_for ( 'items', search="consumables" ) }}>Consumables</a></li>
+              
+                                    </ul>
+                                </li>
+                                <li class="active"><a href={{ url_for ( 'prefab') }}>Pre-Fab and Specials</a></li>
+                                  <li class="active"><a href={{ url_for ( 'stockist') }}>Become a Stockist</a></li>
+                                  <li class="active"><a href={{ url_for ( 'contact') }}>Contact Us</a></li>
+                            </ul>
+                  </div>
+      
   </div></div>
   
         <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
@@ -91,19 +101,36 @@
 
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
+                
                 <div class="item active">
                     <img src={{url_for( 'static', filename="images/1.jpg" )}} alt="carousel items one">
+                    <div class="carousel-caption">
+                            <h3>GET IN TOUCH TODAY!</h3>
+                            <p><a href="mailto:sales@aitkenscablemanagement.co.uk">sales@aitkenscablemanagement.co.uk</a></p>
+                          </div>
                 </div>
 
                 <div class="item">
                     <img src={{url_for( 'static', filename="images/2.jpg" )}} alt="carousel items one">
+                    <div class="carousel-caption">
+                            <h3>GET IN TOUCH TODAY!</h3>
+                            <p><a href="mailto:sales@aitkenscablemanagement.co.uk">sales@aitkenscablemanagement.co.uk</a></p>
+                          </div>
                 </div>
 
                 <div class="item">
                     <img src={{url_for( 'static', filename="images/3.jpg" )}} alt="carousel items one">
+                    <div class="carousel-caption">
+                            <h3>GET IN TOUCH TODAY!</h3>
+                            <p><a href="mailto:sales@aitkenscablemanagement.co.uk">sales@aitkenscablemanagement.co.uk</a></p>
+                          </div>
                 </div>
                 <div class="item">
                     <img src={{url_for( 'static', filename="images/4.jpg" )}} alt="carousel items one">
+                    <div class="carousel-caption">
+                            <h3>GET IN TOUCH TODAY!</h3>
+                            <p><a href="mailto:sales@aitkenscablemanagement.co.uk">sales@aitkenscablemanagement.co.uk</a></p>
+                          </div>
                 </div>
             </div>
 

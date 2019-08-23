@@ -74,15 +74,31 @@ p{
     background:#003e71;
     color:#fff;
 }
+.carousel-caption{
+    background-color:#003e71;
+    color:#f2812c;
+    width:25%;
+    top: 50%;
+    left:35%;
+transform: translateY(-50%);
 
+}
 .listImgs{
     width:100px;
     height:100px;
+}
+.icon-bar{
+    color:#fff;
 }
 
 .orange{
     color:#f2812c;
 }
+.navbar-toggle {
+    background-color:#003e71;
+    color:#fff;
+}
+
 
 .white{
     color:#fff;
