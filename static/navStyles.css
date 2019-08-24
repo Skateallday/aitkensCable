@@ -1,11 +1,11 @@
  
 /* Written by Kyle Hamilton of candpgeneration.com CSS3 transitions - animated dropdown menu without javascript that plays nice in IE7+, FF, CHROME, SAFARI The original bare bones version can be found at: http://candpgeneration.com/CSS-dropdowns/CSS3-dropdown.html You are free to use this code any way you like. Please do not remove this comment. */
 /* the main menu */
-.navigation {
+.navbar-default {
     display:block;
     z-index:1000;
 }
-.navigation > ul{
+.navbar-default > ul{
     display: -webkit-box;
     -webkit-box-orient: horizontal;
     display: -moz-box;
@@ -13,7 +13,7 @@
     display: box;
     -moz-box-orient: horizontal;
 }
-.navigation ul{
+.nav ul{
     list-style :none;
     margin:0;
     padding:0;
@@ -24,7 +24,7 @@
     z-index:1000;
     width:100%;
 }
-.navigation > ul > li {
+.navbar-default > ul > li {
     position : relative;
     float : left;
     font-size: 15px;
@@ -33,7 +33,7 @@
     -moz-box-flex: 1;
     box-flex: 1;
 }
-.navigation > ul > li > a {
+.navbar-default > ul > li > a {
     background-color: #f2812c;
    /* orange */
     display:block;
@@ -47,7 +47,7 @@
     -ms-transition: background-color 0.3s ease;
     transition: background-color 0.3s ease;
 }
-.navigation > ul > li > a:hover{
+.navbar-default > ul > li > a:hover{
     background-color:#003e71;
    /* grey */
     color:#fff;
@@ -55,7 +55,7 @@
 }
 /* the show/hide effects */
 /* the drop-down box */
-.navigation ul ul{
+.nav ul ul{
    /* background-color:#e6056f;
     remove. this is for illustration purposes only */
     width:1000px;
@@ -71,22 +71,21 @@
     transition: height 0.3s ease-in;
 }
 /* don't display tertiary box yet */
-.navigation > ul > li:hover ul ul, .navigation > ul > li > a:hover ul ul{
+.navbar-default > ul > li:hover ul ul, .navbar-default > ul > li > a:hover ul ul{
     height:0;
 }
 /* tertiary drop-down box */
-.navigation ul ul ul{
+.navbar-default ul ul ul{
     left:170px;
     width:170px;
 }
-.navigation > ul > li:hover ul, .navigation > ul > li > a:hover ul, .navigation ul ul li:hover > ul, .navigation ul ul li a:hover > ul{
+.nav > ul > li:hover ul, .nav > ul > li > a:hover ul, .nav ul ul li:hover > ul, .nav ul ul li a:hover > ul{
     height:520px;
 }
 /* drop-down item styles */
-.navigation ul ul li{
+.navbar-default ul ul li{
     background-color:#003e71;
    /* grey */
-    width:27.5%;
     color:#fff;
    /* make the background-color fade in on roll-over */
     -webkit-transition: background-color 0.3s ease;
@@ -96,13 +95,13 @@
     transition: background-color 0.3s ease;
 }
 /* unfortunate ie7 gap fix */
-.ie7 .navigation ul ul li{
+.ie7 .nav ul ul li{
     margin-bottom:-3px;
 }
-.navigation ul ul li:hover {
+.navbar-default ul ul li:hover {
     background-color:#fff;
 }
-.navigation ul ul li a {
+.navbar-default ul ul li a {
     display:block;
     text-decoration:none;
     margin:0 12px;
@@ -111,24 +110,24 @@
    /* grey */
 }
 /* The following six rules set the lines in between menu items. To make this play nice in IE, we will not be using nth-child but the "+" sibling slector. */
-.navigation ul ul ul li a{
+.navbar-default ul ul ul li a{
     border:none !important;
 }
-.navigation ul ul ul li + li a{
+.navbar-default ul ul ul li + li a{
     border-top:1px dotted #999 !important;
 }
-.navigation ul ul li + li a{
+.navbar-default ul ul li + li a{
     border-top:1px dotted #999;
 }
-.navigation ul ul li:hover + li a{
+.navbar-default ul ul li:hover + li a{
     border-top:1px solid #eaeaea;
 }
-.navigation ul ul ul li:hover + li a{
+.navbar-default ul ul ul li:hover + li a{
     border: 0 !important;
 }
-.navigation ul ul ul li:hover + li{
+.navbar-default ul ul ul li:hover + li{
     border-top:1px solid #999 !important;
 }
-.navigation ul ul li a:hover, .navigation ul ul li:hover > a {
+.navbar-default ul ul li a:hover, .navbar-default ul ul li:hover > a {
     color:#003e71;
 }

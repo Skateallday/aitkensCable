@@ -25,9 +25,19 @@ h5{
 p{
    font-family: 'Gothic A1', sans-serif;
 }
+
 .nav{
     background:#f2812c;
 }
+.navbar a{
+    color:#fff;
+}
+.navbar a:hover, .navbar a:active{
+
+    color:#003e71;
+}
+
+
 .form-control-white{
     background:#fff;
     color:#003e71;
@@ -77,10 +87,12 @@ p{
 .carousel-caption{
     background-color:#003e71;
     color:#f2812c;
-    width:25%;
-    top: 50%;
-    left:35%;
-transform: translateY(-50%);
+    position: absolute;
+top: 20;
+left: 20;
+z-index: 10;
+width:60%
+}
 
 }
 .listImgs{
@@ -99,11 +111,14 @@ transform: translateY(-50%);
     color:#fff;
 }
 
+.white a{
+    color:#fff;
+}
 
 .white{
     color:#fff;
 }
 td:empty{
     display: none;
-  }\/0.
+  }
   
