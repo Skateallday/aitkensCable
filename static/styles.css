@@ -93,6 +93,13 @@ left: 20;
 z-index: 10;
 width:60%
 }
+.carousel-caption h3{
+    font-size:4vw;
+}
+.carousel-caption p{
+    font-size:2vw;
+}
+
 
 }
 .listImgs{
