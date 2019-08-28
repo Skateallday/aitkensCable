@@ -29,11 +29,7 @@ p{
 .nav{
     background:#f2812c;
 }
-.navbar a{
-    color:#fff;
-}
 .navbar a:hover, .navbar a:active{
-
     color:#003e71;
 }
 
@@ -124,4 +120,3 @@ width:60%
 td:empty{
     display: none;
   }
-  
