@@ -23,7 +23,8 @@
                               <th scope="col"></th>
                             </tr>{% for row in results %}
                             <tr>
-                                <td><img class="listImgs" src="{{url_for('static', filename='uploads/')}}{{ row[1] }}.jpg"></td>
+                                <td><img class="productPageImages"
+                                  src="{{url_for('static', filename='uploads/')}}{{ row[1] }}.jpg"></td>
 
                     <td>{{ row[0] }}</td>
                     
