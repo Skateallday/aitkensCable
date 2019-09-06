@@ -19,14 +19,9 @@
                             <tr>
                               <th scopre="col">Image</th>
                               <th scope="col">Item Name</th>
-                              <th scope="col">Model Number</th>
-                              <th scope="col">Model Reference</th>
-                              <th scope="col">Measurement</th>
-                              <th scope="col">Value</th>
-                              <th scope="col">Second Measurement</th>
-                              <th scope="col">Second Value</th>
+                              <th scope="col"></th>
                               
-                              <th scope="col">Item Category</th>
+                              
                             </tr>{% for row in results %}
                             <tr>
                                 <td><img class="productPageImages" src="{{url_for('static', filename='uploads/')}}{{ row[1] }}.jpg"></td>

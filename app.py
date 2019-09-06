@@ -40,6 +40,12 @@ def before_request():
         if 'search' in session:
                 g.search = session['search']
 
+@app.errorhandler(404)
+def page_not_found(e):
+        form2 = searchData(request.form)
+        form3 = contactForm(request.form)
+        return render_template('404.html', form3=form3, form2=form2), 404
+
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/Home", methods=['GET', 'POST'])
 @app.route("/home", methods=['GET', 'POST'])
@@ -151,6 +157,34 @@ def CableTray():
                 return redirect('sendMail')
         return render_template('cableTray.html', title=title, form2=form2, form3=form3)
 
+@app.route("/ChannelSupport", methods=['GET', 'POST'])
+def ChannelSupport():
+        title="Channel Support Systems at Aitken's Electrical"
+        form2= searchData(request.form)
+        form3= contactForm(request.form)
+        if form3.submit3.data:
+                return redirect('sendMail')
+        conn = sqlite3.connect('static/data.sqlite')  
+              
+        c = conn.cursor()
+        search=('''SELECT DISTINCT item_name, model_ref, ImageName FROM items WHERE item_category LIKE ?''')
+        c.execute(search, ['Channel Support'])
+        heads = c.fetchall()
+        print (heads) 
+        if heads:
+                for head in heads:
+        
+                        print (head)
+                        c.execute('SELECT DISTINCT item_name, model_number, model_ref, measurement1, value1, measurement2, value2, ImageName FROM items WHERE item_category LIKE (?)', (('Channel Support'),))
+                        rows = c.fetchall()
+                        for row in rows:
+
+                                results = rows
+                        return render_template('channelSupport.html', heads=heads, results=results, title=title, form2=form2, form3=form3)
+        else:
+                                error="Sorry there are no results"
+                                return render_template('channelSupport.html',title=title, error=error, form2=form2, form3=form3)
+
 @app.route("/contact", methods=['GET', 'POST'])
 def contact():
         title="Contact Page for Aitken's Electrical"
@@ -209,31 +243,42 @@ def search():
                 return render_template('search.html',title=title, error=error, form2=form2, form3=form3)
         return redirect('home')
 
+@app.route("/items/", methods=['GET', 'POST'])
+def items2():
+        title="Items at Aitken's Electrical"
+        form2= searchData(request.form)
+        form3= contactForm(request.form)
+        if form3.submit3.data:
+                return redirect('sendMail')
+        return render_template('items.html', title=title, form2=form2, form3=form3)
+
+
 
 @app.route("/items/<search>", methods=['GET', 'POST'])
 def items(search):
-        print(search)
+        search = search 
+        print (search)
         title="Aitken's Electrical Item Results"
-        form = viewItems(request.form)
         form2 = searchData(request.form)   
+        form = viewItems(request.form)
         form3 = contactForm(request.form)
         if form3.submit3.data:
                 return redirect('sendMail')
         
-        if request.method == 'GET':
-                conn = sqlite3.connect('static/data.sqlite')                
-                c = conn.cursor()
+        
+        conn = sqlite3.connect('static/data.sqlite')                
+        c = conn.cursor()
 
-                c.execute('SELECT DISTINCT item_name, ImageName, item_category  FROM items WHERE item_category LIKE (?)', (search,))
-                rows = c.fetchall()
-                if rows:
-                        for row in rows:
-                                print(rows)
-                                results = rows
-                                return render_template('items.html', title=title, heading=row[2], results=results, form2=form2, form3=form3, form=form)
-                else:
-                        flash("There has been an error, please try again")
-                        return render_template('items.html', title=title, form2=form2,form3=form3, form=form)
+        c.execute('SELECT DISTINCT item_name, ImageName, item_category FROM items WHERE item_category LIKE (?)', (search,))
+        rows = c.fetchall()
+        if rows:
+                for row in rows:
+                        print(rows)
+                        results = rows
+                        return render_template('items.html', title=title, heading=row[2], results=results, form2=form2, form3=form3, form=form)
+        else:
+                flash("There has been an error, please try again")
+                return render_template('items.html', title=title, form2=form2,form3=form3, form=form)
                                 
         if request.method == 'POST':
                 conn =sqlite3.connect('static/data.sqlite')
@@ -498,9 +543,7 @@ def addEntry():
                 if request.method == 'POST':                        
                         table=(form.itemCategory.data)                     
                         item_name =(form.itemName.data)
-                        print(item_name)
                         item_Ref =(form.modelRef.data)
-                        print(item_Ref)
                         model_number =(form.modelNumber.data)
                         item_category =(form.itemCategory.data)
                         measurement1=(form.measurements.data)
@@ -513,7 +556,6 @@ def addEntry():
                         value4=(form.value4.data)
                         f = request.files.get('photo')
                         imageName =(form.imageName.data)
-                        print(f)
                         filename = secure_filename(f.filename)   
                         filetype = filename.split('.')
                         uploadFile = imageName + ('.') + filetype[1]                    
@@ -521,8 +563,7 @@ def addEntry():
                                 (app.config['UPLOAD_FOLDER'], uploadFile
                         ))
                         entry=[(item_name, model_number, item_Ref, item_category, measurement1, value1, measurement2, value2, measurement3, value3, measurement4, value4, imageName)]
-                        print(entry)                             
-                        print(table)
+                        
 
                         conn = sqlite3.connect('static/data.sqlite')                
                         with conn:
